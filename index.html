@@ -5,12 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>먼작귀 성향 테스트</title>
   
-  <meta property="og:type" content="website">
-  <meta id="og-title" property="og:title" content="나와 닮은 먼작귀 캐릭터 찾기 테스트">
-  <meta id="og-desc" property="og:description" content="나의 성향과 꼭 닮은 먼작귀 캐릭터와 환상의 케미를 찾아보세요!">
-  <meta id="og-image" property="og:image" content="https://via.placeholder.com/800x400/b3e5fc/0277bd?text=Chiikawa+Test">
-  <meta property="og:site_name" content="먼작귀 성향 테스트">
-
+  <!-- Kakao SDK v2.8.1 -->
   <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.8.1/kakao.min.js" integrity="sha384-OL+ylM/iuPLtW5U3XcvLSGhE8JzReKDank5InqlHGWPhb4140/yrBw0bg0y7+C9J" crossorigin="anonymous"></script>
 
   <style>
@@ -23,7 +18,6 @@
     }
 
     body {
-      /* 전체 배경: 아주 밝은 파스텔 스카이블루 */
       background-color: #e3f2fd;
       display: flex;
       justify-content: center;
@@ -39,7 +33,7 @@
       max-width: 420px;
       border-radius: 28px;
       padding: 32px 24px;
-      box-shadow: 0 12px 32px rgba(2, 119, 189, 0.08); /* 파스텔 블루 톤 그림자 */
+      box-shadow: 0 12px 32px rgba(2, 119, 189, 0.08);
       text-align: center;
       position: relative;
     }
@@ -51,13 +45,11 @@
       width: 150px;
       height: 150px;
       border-radius: 50%;
-      /* 이미지 배경: 밝은 파스텔 스카이블루 */
       background-color: #e1f5fe;
       margin: 16px auto 24px;
       display: flex;
       align-items: center;
       justify-content: center;
-      /* 테두리: 중간 파스텔 스카이블루 */
       border: 4px solid #b3e5fc;
       overflow: hidden;
     }
@@ -70,9 +62,7 @@
 
     .cover-badge {
       display: inline-block;
-      /* 뱃지 배경: 아주 밝은 파스텔 스카이블루 */
       background-color: #e1f5fe;
-      /* 뱃지 글씨: 진한 스카이블루 */
       color: #0277bd;
       font-size: 13px;
       font-weight: 800;
@@ -98,12 +88,12 @@
       word-break: keep-all;
     }
 
-    /* 2. 진행도 (Progress Bar) 및 질문 화면 */
+    /* 2. 질문 화면 */
     .quiz-card { display: none; }
 
     .progress-container {
       width: 100%;
-      background-color: #e1f5fe; /* 아주 밝은 파스텔 블루 */
+      background-color: #e1f5fe;
       border-radius: 10px;
       height: 8px;
       margin-bottom: 24px;
@@ -113,14 +103,14 @@
     .progress-bar {
       height: 100%;
       width: 0%;
-      background-color: #039be5; /* 중간 스카이블루 포인트 */
+      background-color: #039be5;
       border-radius: 10px;
       transition: width 0.3s ease;
     }
 
     .q-number {
       font-size: 13px;
-      color: #0277bd; /* 진한 스카이블루 */
+      color: #0277bd;
       font-weight: 800;
       margin-bottom: 10px;
       letter-spacing: 0.5px;
@@ -151,14 +141,13 @@
       word-break: keep-all;
     }
 
-    /* 선택지 호버/클릭시 스카이블루 포인트 */
     .btn-option:active, .btn-option:hover {
       background-color: #e1f5fe;
       border-color: #b3e5fc;
       color: #0277bd;
     }
 
-    /* 3. 결과 카드 영역 */
+    /* 3. 결과 화면 */
     .result-card { display: none; }
 
     .char-img-box {
@@ -172,7 +161,7 @@
       justify-content: center;
       overflow: hidden;
       border: 4px solid #b3e5fc;
-      box-shadow: 0 8px 20px rgba(3, 155, 229, 0.15); /* 스카이블루 톤 그림자 */
+      box-shadow: 0 8px 20px rgba(3, 155, 229, 0.15);
     }
 
     .char-img-box img {
@@ -193,8 +182,8 @@
     }
 
     .tag {
-      background-color: #e1f5fe; /* 아주 밝은 파스텔 블루 */
-      color: #0277bd; /* 진한 스카이블루 */
+      background-color: #e1f5fe;
+      color: #0277bd;
       font-size: 12px;
       font-weight: 700;
       padding: 6px 12px;
@@ -202,8 +191,8 @@
     }
 
     .quote-box {
-      background-color: #f2faff; /* 아주 옅은 스카이블루 */
-      border-left: 4px solid #039be5; /* 중간 스카이블루 */
+      background-color: #f2faff;
+      border-left: 4px solid #039be5;
       padding: 12px 16px;
       border-radius: 6px 14px 14px 6px;
       font-size: 14px;
@@ -232,32 +221,8 @@
 
     .info-item { margin-bottom: 12px; }
     .info-item:last-child { margin-bottom: 0; }
-    .info-label { font-size: 12px; font-weight: 800; color: #0277bd; display: block; margin-bottom: 3px; } /* 진한 스카이블루 */
+    .info-label { font-size: 12px; font-weight: 800; color: #0277bd; display: block; margin-bottom: 3px; }
     .info-value { font-size: 14px; color: #2c2c2e; font-weight: 600; line-height: 1.4; }
-
-    /* 4. 광고 배너 영역 */
-    .ad-banner-area {
-      width: 100%;
-      min-height: 90px;
-      background-color: #f1f8ff; /* 아주 옅은 파스텔 블루 */
-      border: 1px dashed #cfd8dc;
-      border-radius: 18px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-      margin: 20px 0;
-      overflow: hidden;
-    }
-
-    .ad-label {
-      font-size: 10px;
-      color: #90a4ae;
-      margin-bottom: 4px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
 
     .chemistry-section { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
     .chem-box { border-radius: 18px; padding: 14px 16px; text-align: left; }
@@ -268,7 +233,7 @@
     .chem-box.tikitaka .chem-title { color: #9f1239; }
     .chem-desc { font-size: 13px; color: #374151; line-height: 1.45; }
 
-    /* 5. 공유 영역 (CTA & SNS) */
+    /* 공유 버튼 */
     .share-section {
       display: flex;
       flex-direction: column;
@@ -294,7 +259,6 @@
     .btn-main-share:active { transform: scale(0.98); opacity: 0.9; }
     
     .btn-kakao-primary { background-color: #FEE500; color: #191919; }
-    /* 메인 링크 복사 버튼: 중간 스카이블루 */
     .btn-link-primary { background-color: #039be5; color: #ffffff; }
 
     .sub-sns-group {
@@ -316,7 +280,6 @@
     .btn-sub-sns:active { opacity: 0.8; }
     .btn-sub-sns.twitter { background-color: #000000; color: #ffffff; }
     .btn-sub-sns.facebook { background-color: #1877f2; color: #ffffff; }
-    /* 네이버 버튼: 옅은 파스텔 블루 */
     .btn-sub-sns.naver { background-color: #81d4fa; color: #ffffff; }
 
     .btn-restart {
@@ -325,7 +288,6 @@
       border-radius: 18px;
       font-size: 14px;
       font-weight: 700;
-      /* 다시 테스트하기 버튼: 아주 밝은 파스텔 블루 */
       background-color: #e1f5fe;
       color: #0277bd;
       border: none;
@@ -346,6 +308,7 @@
 <body>
 
   <div class="container">
+    <!-- 1. 시작 화면 -->
     <div id="start-view" class="start-card">
       <span class="cover-badge">성향 테스트</span>
       <h1 class="cover-title">나와 꼭 닮은<br>먼작귀 캐릭터 찾기</h1>
@@ -356,6 +319,7 @@
       <button class="btn-main-share btn-link-primary" onclick="startTest()">테스트 시작하기</button>
     </div>
 
+    <!-- 2. 질문 화면 -->
     <div id="quiz-view" class="quiz-card">
       <div class="progress-container">
         <div class="progress-bar" id="progress-bar"></div>
@@ -365,6 +329,7 @@
       <div id="answer-buttons"></div>
     </div>
 
+    <!-- 3. 결과 화면 -->
     <div id="result-view" class="result-card">
       <div class="char-img-box">
         <img id="res-img" src="" alt="캐릭터 이미지">
@@ -386,11 +351,6 @@
         </div>
       </div>
 
-      <div class="ad-banner-area">
-        <span class="ad-label">ADVERTISEMENT</span>
-        <p style="font-size: 12px; color: #90a4ae;">중간 광고 스크립트 삽입 위치</p>
-      </div>
-
       <div class="chemistry-section">
         <div class="chem-box best">
           <div class="chem-title" id="res-best-title"></div>
@@ -402,10 +362,11 @@
         </div>
       </div>
 
+      <!-- 공유 섹션 -->
       <div class="share-section">
-        <a id="kakaotalk-sharing-btn" href="javascript:;" class="btn-main-share btn-kakao-primary">
+        <button class="btn-main-share btn-kakao-primary" onclick="shareKakao()">
           💬 카카오톡으로 결과 공유하기
-        </a>
+        </button>
         <button class="btn-main-share btn-link-primary" onclick="copyLink()">
           🔗 테스트 링크 복사하기
         </button>
@@ -418,16 +379,10 @@
 
         <button class="btn-restart" onclick="restartTest()">↺ 다시 테스트하기</button>
       </div>
-
-      <div class="ad-banner-area">
-        <span class="ad-label">ADVERTISEMENT</span>
-        <p style="font-size: 12px; color: #90a4ae;">하단 광고 스크립트 삽입 위치</p>
-      </div>
     </div>
   </div>
 
   <script>
-    /* 카카오 JavaScript 키 적용 */
     const JAVASCRIPT_KEY = '45851354763e4eb82596527c8f662c33';
 
     if (window.Kakao) {
@@ -514,10 +469,9 @@
         name: "치이카와", title: "소심하지만 용기 내는 순수파",
         tags: ["#눈물많은_순수왕", "#소심하지만_용감해", "#귀여움극한"],
         quote: "“와... 와아...!”",
-        img: "https://via.placeholder.com/130/e1f5fe/0277bd?text=Chiikawa",
+        img: "https://via.placeholder.com/300x300/e1f5fe/0277bd?text=Chiikawa",
         summary: "겁은 많고 소심하지만, 소중한 친구를 위해서라면 끝까지 용기를 내어 마주하는 순수한 사람입니다.",
-        item: "곰돌이 포쉐트 (포쉐트 갑옷 씨가 직접 만들어준 분홍 포쉐트)",
-        food: "대형 꿀맛 푸딩 (거대 푸딩 위에서 방방 뛰며 먹는 달콤함)",
+        item: "곰돌이 포쉐트", food: "대형 꿀맛 푸딩",
         best: "하치와레", tikitaka: "우사기",
         tikitakaChem: "우사기의 기상천외한 폭주에 눈물 글썽이며 당황하지만 어느새 같이 신나게 어울리는 조합!"
       },
@@ -525,10 +479,9 @@
         name: "하치와레", title: "긍정적이고 다정한 분위기 메이커",
         tags: ["#프로기록러", "#긍정멘탈", "#다정한오지랖"],
         quote: "“자느타카라(어떻게든 되겠지)!”",
-        img: "https://via.placeholder.com/130/e1f5fe/0277bd?text=Hachiware",
+        img: "https://via.placeholder.com/300x300/e1f5fe/0277bd?text=Hachiware",
         summary: "어려운 상황에서도 긍정적인 면을 발견하며, 주변 사람들을 따뜻하게 배려하고 기록하기 좋아하는 다정함의 결정체입니다.",
-        item: "블루 카메라 (열심히 보수를 모아 마련한 추억 기록용 카메라)",
-        food: "챠루메라 수제 라멘 (친구를 위해 정성껏 끓여 대접하는 다정한 한 끼)",
+        item: "블루 카메라", food: "챠루메라 수제 라멘",
         best: "치이카와", tikitaka: "모몬가",
         tikitakaChem: "뻔뻔하게 떼를 쓰거나 음식을 빼앗아 먹어도 다정하게 받아주며 식은땀 흘리는 조합!"
       },
@@ -536,10 +489,9 @@
         name: "우사기", title: "거침없는 자유로운 영혼의 마이웨이",
         tags: ["#마이웨이", "#예측불허", "#숨은고수"],
         quote: "“우라! 야하-! 하아?!”",
-        img: "https://via.placeholder.com/130/e1f5fe/0277bd?text=Usagi",
+        img: "https://via.placeholder.com/300x300/e1f5fe/0277bd?text=Usagi",
         summary: "남들의 시선 따위 신경 쓰지 않는 미지의 실력자! 어디로 튈지 모르지만 예측불허의 반전 능력으로 문제를 해결합니다.",
-        item: "소리 나는 리듬 지팡이 (기괴한 소리를 내며 휘두르는 특이한 도구)",
-        food: "격하게 흔든 라무네 (거품을 뿜어내며 신나게 마시는 시원한 음료)",
+        item: "소리 나는 리듬 지팡이", food: "격하게 흔든 라무네",
         best: "하치와레", tikitaka: "고블린",
         tikitakaChem: "고블린이 룰과 감옥으로 통제하려 들수록 신나게 판을 깨부수는 해프닝 조합!"
       },
@@ -547,10 +499,9 @@
         name: "모몬가", title: "귀여움을 무기로 삼는 뻔뻔한 악동",
         tags: ["#귀여움독점", "#뻔뻔한악동", "#관종만렙"],
         quote: "“귀여워해라! 칭찬해라!”",
-        img: "https://via.placeholder.com/130/e1f5fe/0277bd?text=Momonga",
+        img: "https://via.placeholder.com/300x300/e1f5fe/0277bd?text=Momonga",
         summary: "자신이 귀엽다는 것을 완벽하게 알고 있는 타입! 뻔뻔하고 당당하게 애정을 요구하지만 미워할 수 없는 매력이 있습니다.",
-        item: "폭신폭신 꼬리 빗 (자신의 매력 포인트인 꼬리를 가꾸는 빗)",
-        food: "갓 구운 핫케이크 (남의 음식을 빼앗아 우걱우걱 먹는 욕심쟁이 디저트)",
+        item: "폭신폭신 꼬리 빗", food: "갓 구운 핫케이크",
         best: "카니", tikitaka: "랏코",
         tikitakaChem: "아무리 뻔뻔하게 애교를 부려봐도 랏코의 진지한 카리스마와 팩폭 앞에 작아지는 조합!"
       },
@@ -558,10 +509,9 @@
         name: "쿠리만쥬", title: "느긋함을 즐기는 낭만파 미식가",
         tags: ["#어른미식가", "#하아_크아", "#마이웨이혼술"],
         quote: "“하아아아-! (크아-)”",
-        img: "https://via.placeholder.com/130/e1f5fe/0277bd?text=Kurimanju",
+        img: "https://via.placeholder.com/300x300/e1f5fe/0277bd?text=Kurimanju",
         summary: "맛있는 음식과 시원한 음료 한 잔이면 세상을 다 얻은 기분! 혼자만의 여유와 미식을 즐기는 느긋한 어른스러운 성향입니다.",
-        item: "휴대용 술잔/텀블러 (허리춤에 차고 다니는 전용 미니 잔)",
-        food: "구운 오징어 다리 (즉석에서 직화로 구워 '하아-!' 소리를 내는 최애 안주)",
+        item: "휴대용 술잔/텀블러", food: "구운 오징어 다리",
         best: "시사", tikitaka: "우사기",
         tikitakaChem: "조용히 안주와 음료를 음미하고 싶은데 옆에서 소리를 지르고 음식을 탐내 번잡해지는 조합!"
       },
@@ -569,10 +519,9 @@
         name: "랏코", title: "철저한 자기관리의 완벽주의 실력파",
         tags: ["#토벌1위", "#반전디저트파", "#철저한자기관리"],
         quote: "“기억해 둬라... 이 맛을.”",
-        img: "https://via.placeholder.com/130/e1f5fe/0277bd?text=Rakko",
+        img: "https://via.placeholder.com/300x300/e1f5fe/0277bd?text=Rakko",
         summary: "자기 분야에서 최고의 자리에 오른 능력자! 카리스마 넘치는 외면 뒤에 달콤한 디저트를 사랑하는 귀여운 반전 매력이 있습니다.",
-        item: "토벌 랭킹 1위의 검 (강인함과 끊임없는 단련의 상징)",
-        food: "딸기 파르페 (강인한 겉모습 뒤 몰래 디저트 카페에서 즐기는 최애 파르페)",
+        item: "토벌 랭킹 1위의 검", food: "딸기 파르페",
         best: "시사", tikitaka: "모몬가",
         tikitakaChem: "스승으로서 엄격히 단련시키려 해도 떼만 쓰며 게으름 피우는 모습에 난감해지는 조합!"
       },
@@ -580,10 +529,9 @@
         name: "시사", title: "성실함과 예의를 갖춘 자격증 성취파",
         tags: ["#열정알바생", "#자격증수집가", "#예의바름끝판왕"],
         quote: "“우레시-! (기뻐요!)”",
-        img: "https://via.placeholder.com/130/e1f5fe/0277bd?text=Shisa",
+        img: "https://via.placeholder.com/300x300/e1f5fe/0277bd?text=Shisa",
         summary: "목표를 세우면 밤낮없이 노력하여 성과를 내는 성실함의 대명사! 항상 예의 바르고 열정적으로 일을 해냅니다.",
-        item: "슈퍼 알바 자격증 (밤낮으로 끊임없이 공부해서 취득한 자격증)",
-        food: "낭풍(郎風) 특제 라멘 (자신이 열심히 일하는 라멘집의 대표 메뉴)",
+        item: "슈퍼 알바 자격증", food: "낭풍 특제 라멘",
         best: "쿠리만쥬", tikitaka: "모몬가",
         tikitakaChem: "정당하게 얻은 일터에서 뻔뻔하게 알바 자리를 넘보거나 응석을 부려 어쩔 줄 모르는 조합!"
       }
@@ -591,6 +539,7 @@
 
     let currentQ = 0;
     let scores = { E: 0, I: 0, T: 0, F: 0 };
+    let currentResultData = null;
 
     function startTest() {
       document.getElementById('start-view').style.display = 'none';
@@ -648,40 +597,63 @@
         resKey = E > I ? 'hachiware' : 'chiikawa';
       }
 
-      const data = results[resKey] || results.chiikawa;
+      currentResultData = results[resKey] || results.chiikawa;
 
-      document.getElementById('res-img').src = data.img;
-      document.getElementById('res-sub').innerText = data.title;
-      document.getElementById('res-name').innerText = data.name;
-      document.getElementById('res-quote').innerText = data.quote;
-      document.getElementById('res-summary').innerText = data.summary;
-      document.getElementById('res-item').innerText = data.item;
-      document.getElementById('res-food').innerText = data.food;
-      document.getElementById('res-best-title').innerText = `💖 BEST 짝꿍: ${data.best}`;
-      document.getElementById('res-tiki-title').innerText = `⚡ 환상의 티키타카: ${data.tikitaka}`;
-      document.getElementById('res-tiki-desc').innerText = data.tikitakaChem;
+      document.getElementById('res-img').src = currentResultData.img;
+      document.getElementById('res-sub').innerText = currentResultData.title;
+      document.getElementById('res-name').innerText = currentResultData.name;
+      document.getElementById('res-quote').innerText = currentResultData.quote;
+      document.getElementById('res-summary').innerText = currentResultData.summary;
+      document.getElementById('res-item').innerText = currentResultData.item;
+      document.getElementById('res-food').innerText = currentResultData.food;
+      document.getElementById('res-best-title').innerText = `💖 BEST 짝꿍: ${currentResultData.best}`;
+      document.getElementById('res-tiki-title').innerText = `⚡ 환상의 티키타카: ${currentResultData.tikitaka}`;
+      document.getElementById('res-tiki-desc').innerText = currentResultData.tikitakaChem;
 
       const tagsContainer = document.getElementById('res-tags');
       tagsContainer.innerHTML = '';
-      data.tags.forEach(tag => {
+      currentResultData.tags.forEach(tag => {
         const span = document.createElement('span');
         span.className = 'tag';
         span.innerText = tag;
         tagsContainer.appendChild(span);
       });
+    }
 
-      // 메타 태그 업데이트 (파스텔 블루 톤 가상 이미지 URL로 임시 변경)
-      document.getElementById('og-title').setAttribute('content', `나와 닮은 먼작귀 캐릭터는 '${data.name}'!`);
-      document.getElementById('og-desc').setAttribute('content', `${data.title} - ${data.quote}`);
-      document.getElementById('og-image').setAttribute('content', `https://via.placeholder.com/800x400/b3e5fc/0277bd?text=${data.name}`);
-
-      // 카카오 스크랩 공유 바인딩
-      if (window.Kakao && Kakao.isInitialized()) {
-        Kakao.Share.createScrapButton({
-          container: '#kakaotalk-sharing-btn',
-          requestUrl: window.location.href,
-        });
+    // 카카오톡 공유 (sendDefault API 방식)
+    function shareKakao() {
+      if (!window.Kakao) {
+        alert('카카오 SDK를 불러오지 못했습니다.');
+        return;
       }
+
+      if (!Kakao.isInitialized()) {
+        Kakao.init(JAVASCRIPT_KEY);
+      }
+
+      const data = currentResultData || results.chiikawa;
+
+      Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: `나와 닮은 먼작귀 캐릭터는 '${data.name}'!`,
+          description: `${data.title}\n"${data.quote}"`,
+          imageUrl: data.img,
+          link: {
+            mobileWebUrl: window.location.href,
+            webUrl: window.location.href,
+          },
+        },
+        buttons: [
+          {
+            title: '나도 테스트해보기',
+            link: {
+              mobileWebUrl: window.location.href,
+              webUrl: window.location.href,
+            },
+          },
+        ],
+      });
     }
 
     function shareTwitter() {

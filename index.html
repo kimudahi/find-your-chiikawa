@@ -181,7 +181,6 @@
       border-radius: 14px;
     }
 
-    /* 명대사 카드 전면 개편 스타일 (테두리 카드 형태) */
     .quote-box {
       background-color: #f0f9ff !important;
       border: 2px solid #0288d1 !important;
@@ -205,7 +204,6 @@
       text-align: left;
     }
 
-    /* 행운의 아이템 & 힐링 푸드 2컬럼 반반 섹션 */
     .info-section {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -331,7 +329,7 @@
       <div class="cover-img-box">
         <img src="./main.gif" alt="먼작귀 커버">
       </div>
-      <p class="cover-desc">4가지 선택지로 더 정밀해진 테스트!<br>나와 매칭되는 먼작귀 캐릭터는 누구일까요?</p>
+      <p class="cover-desc">100% 정밀 매칭 알고리즘 적용!<br>나와 매칭되는 먼작귀 캐릭터는 누구일까요?</p>
       <button class="btn-main-share btn-link-primary" onclick="startTest()">테스트 시작하기</button>
     </div>
 
@@ -354,7 +352,6 @@
       <div class="quote-box" id="res-quote"></div>
       <p class="summary-text" id="res-summary"></p>
 
-      <!-- 왼쪽/오른쪽 반반 섹션 구성 -->
       <div class="info-section">
         <div class="info-item">
           <span class="info-label">🍀 행운의 아이템</span>
@@ -408,100 +405,100 @@
       Kakao.init(JAVASCRIPT_KEY);
     }
 
+    /* 1대1 선명한 매칭 구조로 재설계한 질문 목록 */
     const questions = [
       {
-        q: "주말 휴일에 주로 무엇을 하며 보내나요?",
+        q: "주말 휴일에 주로 어떤 시간을 보낼 때 가장 행복한가요?",
         a: [
-          { text: "아늑한 방에서 혼자 조용히 휴식을 취한다.", score: ["chiikawa", "ode"] },
-          { text: "독서나 공부 등 나만의 취미에 집중한다.", score: ["kani", "shisa"] },
-          { text: "맛있는 음식이나 음식을 곁들인 한잔을 즐긴다.", score: ["kurimanju", "rakko"] },
-          { text: "친구들과 만나 활기차게 바깥 활동을 한다.", score: ["hachiware", "usagi", "momonga"] }
+          { text: "아늑한 방에서 혼자 조용히 휴식을 취한다.", char: "chiikawa" },
+          { text: "친구에게 밝게 연락해서 함께 사진 찍고 추억을 만든다.", char: "hachiware" },
+          { text: "어디로 튈지 모르는 즉흥 탐험을 떠난다.", char: "usagi" },
+          { text: "맛있는 음식과 시원한 음료로 혼자만의 낭만을 즐긴다.", char: "kurimanju" }
         ]
       },
       {
-        q: "갑자기 난이도 높은 과제나 목표가 생겼을 때 나의 행동은?",
+        q: "갑자기 난이도 높고 어려운 목표나 과제가 생겼을 때 나의 행동은?",
         a: [
-          { text: "겁부터 나지만 마음을 다잡고 차근차근 마주한다.", score: ["chiikawa", "hachiware"] },
-          { text: "자격증이나 시험 통과를 위해 밤낮없이 노력한다.", score: ["shisa", "rakko"] },
-          { text: "관련된 자료나 책을 찾아보며 조용히 준비한다.", score: ["kani"] },
-          { text: "기분 내키는 대로 자유롭고 임기응변으로 해결한다.", score: ["usagi", "momonga", "ode"] }
+          { text: "겁은 나지만 소중한 사람들을 생각하며 끝까지 용기 낸다.", char: "chiikawa" },
+          { text: "“어떻게든 될 거야!” 라며 긍정적인 마음으로 이겨낸다.", char: "hachiware" },
+          { text: "시험 통과나 목표 달성을 위해 밤낮없이 성실히 공부한다.", char: "shisa" },
+          { text: "자기관리를 엄격히 하며 완벽하게 해결해낸다.", char: "rakko" }
         ]
       },
       {
-        q: "친구들과 여럿이 모여 있을 때 내 성향은?",
+        q: "친구들과 여럿이 모여 있을 때 나는 주로 어떤 역할인가요?",
         a: [
-          { text: "친구들의 이야기를 밝게 들어주고 사진도 남긴다.", score: ["hachiware"] },
-          { text: "말수는 적지만 필요할 때 묵직하게 뒤를 지켜준다.", score: ["ode", "kani"] },
-          { text: "자신의 매력을 당당히 발산하며 관심을 즐긴다.", score: ["momonga", "usagi"] },
-          { text: "어른스럽게 주변을 챙기며 중심을 잡아준다.", score: ["kurimanju", "rakko"] }
+          { text: "분위기를 대화로 밝게 이끌고 친구들을 다정하게 챙긴다.", char: "hachiware" },
+          { text: "나만의 존재감과 매력을 당당하게 발산한다.", char: "momonga" },
+          { text: "차분하게 조용히 이야기를 들어주며 실질적인 도움을 준다.", char: "kani" },
+          { text: "말수는 적지만 묵직하게 뒤에서 든든하게 지켜준다.", char: "ode" }
         ]
       },
       {
-        q: "가장 보람을 느끼거나 뿌듯한 순간은 언제인가요?",
+        q: "가장 뿌듯하고 보람을 느끼는 순간은 언제인가요?",
         a: [
-          { text: "나의 성과나 노력을 주변에서 크게 인정받을 때", score: ["shisa", "momonga"] },
-          { text: "내가 정성껏 준비한 지식이나 도움을 나눴을 때", score: ["kani", "hachiware"] },
-          { text: "어려운 단련을 이겨내고 스스로 성장했음을 느낄 때", score: ["rakko"] },
-          { text: "좋아하는 이들과 맛있는 걸 먹으며 편히 쉴 때", score: ["kurimanju", "chiikawa"] }
+          { text: "주변 사람들한테 끊임없이 관심과 칭찬을 받을 때", char: "momonga" },
+          { text: "내가 다듬은 지식이나 책을 통해 타인에게 도움이 될 때", char: "kani" },
+          { text: "어려운 단련과 노력을 이겨내고 스스로 더 강해졌을 때", char: "rakko" },
+          { text: "열심히 일하고 정당한 자격과 성과를 인정받았을 때", char: "shisa" }
         ]
       },
       {
-        q: "누군가 나를 기분 좋게 칭찬해 준다면?",
+        q: "누군가 나에게 기분 좋은 칭찬을 해준다면?",
         a: [
-          { text: "“더 칭찬해 줘!” 하고 당당하게 기뻐한다.", score: ["momonga"] },
-          { text: "쑥스러워서 얼굴이 빨개지지만 속으로 무척 기쁘다.", score: ["chiikawa", "kani"] },
-          { text: "“우레시-!” 예의 바르고 열정적으로 감사 인사를 한다.", score: ["shisa"] },
-          { text: "덤덤하게 미소를 지으며 고마움을 표한다.", score: ["rakko", "ode", "kurimanju"] }
+          { text: "쑥스러워서 얼굴이 빨개지지만 속으로 무척 기뻐한다.", char: "chiikawa" },
+          { text: "“더 칭찬해 줘! 귀여워해 줘!” 하며 당당하게 요구한다.", char: "momonga" },
+          { text: "“우레시-!” 예의 바르고 열정적으로 감사함을 표한다.", char: "shisa" },
+          { text: "덤덤하고 의연하게 미소를 지으며 고마움을 표한다.", char: "ode" }
         ]
       },
       {
-        q: "일상에서 스트레스가 쌓였을 때 나만의 해소법은?",
+        q: "일상에서 스트레스가 차올랐을 때 나만의 해소법은?",
         a: [
-          { text: "시원한 음료와 정갈한 안주로 혼자만의 시간 갖기", score: ["kurimanju"] },
-          { text: "소리를 지르거나 몸을 움직여 에너지를 발산하기", score: ["usagi"] },
-          { text: "달콤한 디저트를 먹으며 멘탈 관리하기", score: ["rakko", "chiikawa"] },
-          { text: "조용한 곳에서 책을 읽거나 풍경을 바라보기", score: ["kani", "ode"] }
+          { text: "시원한 한 잔과 맛있는 안주로 느긋하게 시간을 보낸다.", char: "kurimanju" },
+          { text: "에너지를 발산하며 기분 전환을 한다.", char: "usagi" },
+          { text: "달콤한 고급 디저트를 먹으며 기분을 전환한다.", char: "rakko" },
+          { text: "조용한 곳에서 책을 읽거나 잔잔히 마음을 정돈한다.", char: "kani" }
         ]
       },
       {
-        q: "낯선 사람들과 어울려야 하는 모임에 갔을 때 나는?",
+        q: "낯선 사람들이 모인 장소에 갔을 때 나의 모습은?",
         a: [
-          { text: "먼저 인사를 건네며 붙싹성 있게 분위기를 푼다.", score: ["hachiware", "shisa"] },
-          { text: "구석에서 조심스럽게 상황을 살피며 적응한다.", score: ["chiikawa", "kani"] },
-          { text: "묵묵히 자기 자리를 지키며 조용히 존재감을 드러낸다.", score: ["ode"] },
-          { text: "남들 시선 상관없이 원하는 대로 행동한다.", score: ["usagi", "momonga"] }
+          { text: "먼저 다가가 인사를 건네며 친근하게 다가간다.", char: "hachiware" },
+          { text: "주변 시선 신경 쓰지 않고 하고 싶은 대로 자유롭게 행동한다.", char: "usagi" },
+          { text: "구석에서 조용히 상황을 살피며 천천히 적응한다.", char: "chiikawa" },
+          { text: "묵묵히 자기 자리를 지키며 조용한 온정을 전한다.", char: "ode" }
         ]
       },
       {
-        q: "여행을 떠날 때 선호하는 계획 스타일은?",
+        q: "여행을 계획할 때 내가 선호하는 방식은?",
         a: [
-          { text: "시간표부터 맛집 목록까지 꼼꼼히 체크한다.", score: ["shisa", "kani"] },
-          { text: "큰 동선만 정해두고 상황에 맞게 즐긴다.", score: ["hachiware", "rakko"] },
-          { text: "그날의 느낌과 맛있는 음식에 끌리는 대로 움직인다.", score: ["kurimanju", "ode"] },
-          { text: "발길 닿는 대로 즉흥 탐험을 시작한다.", score: ["usagi", "momonga"] }
+          { text: "자격증 공부하듯 맛집부터 동선까지 알차게 체크한다.", char: "shisa" },
+          { text: "현지의 유명 맛집과 술 한잔 기울일 곳을 우선 탐색한다.", char: "kurimanju" },
+          { text: "조용하고 운치 있는 인근 서점이나 명소를 알아본다.", char: "kani" },
+          { text: "큰 틀만 정해두고 발길 닿는 대로 유연하게 즐긴다.", char: "rakko" }
         ]
       },
       {
-        q: "소중한 사람에게 내 마음을 표현하는 방식은?",
+        q: "소중한 사람에게 내 마음을 표현하는 가장 자신 있는 방법은?",
         a: [
-          { text: "따뜻한 말 한마디와 사진으로 추억을 만들어준다.", score: ["hachiware", "chiikawa"] },
-          { text: "말없이 묵직하게 뒤에서 큰 힘이 되어준다.", score: ["ode", "rakko"] },
-          { text: "작은 선물이나 유용한 지식을 살포시 전해준다.", score: ["kani", "shisa"] },
-          { text: "애교나 투정을 부리며 친근감을 표시한다.", score: ["momonga", "usagi"] }
+          { text: "따뜻한 말 한마디와 세심한 챙김으로 마음을 표현한다.", char: "hachiware" },
+          { text: "말로 다 하기보다 무심한 듯 묵직하게 큰 힘이 되어준다.", char: "ode" },
+          { text: "상대방에게 딱 필요한 유용한 정보나 책을 전해준다.", char: "kani" },
+          { text: "솔직한 애교와 표현으로 솔직하게 다가간다.", char: "momonga" }
         ]
       },
       {
-        q: "내가 생각하는 나의 가장 매력적인 면모는?",
+        q: "내가 생각하는 나의 가장 결정적인 매력 포인트는?",
         a: [
-          { text: "순수하고 따뜻해서 보호본능을 자극하는 점", score: ["chiikawa"] },
-          { text: "남을 잘 챙겨주고 항상 긍정적인 에너지를 주는 점", score: ["hachiware", "shisa"] },
-          { text: "어디로 튈지 모르는 엉뚱함과 뛰어난 순발력", score: ["usagi"] },
-          { text: "차분하고 깊은 생각으로 든든한 버팀목이 되는 점", score: ["kani", "ode", "kurimanju"] }
+          { text: "여유롭고 어른스러운 낭만을 즐길 줄 아는 점", char: "kurimanju" },
+          { text: "예측불가한 에너지와 뛰어난 순발력", char: "usagi" },
+          { text: "목표를 위해 포기하지 않고 끝까지 노력하는 열정", char: "shisa" },
+          { text: "자기관리에 철저하면서도 의외의 반전 귀여움이 있는 점", char: "rakko" }
         ]
       }
     ];
 
-    /* 각 캐릭터 설명글을 최소 3줄 이상으로 풍성하게 구성 */
     const results = {
       chiikawa: {
         name: "치이카와", title: "소심하지만 용기 내는 순수파",
@@ -622,17 +619,15 @@
         const btn = document.createElement('button');
         btn.className = 'btn-option';
         btn.innerText = `${idx + 1}. ${ans.text}`;
-        btn.onclick = () => selectAnswer(ans.score);
+        btn.onclick = () => selectAnswer(ans.char);
         btnContainer.appendChild(btn);
       });
     }
 
-    function selectAnswer(targetChars) {
-      targetChars.forEach(charKey => {
-        if (charScores[charKey] !== undefined) {
-          charScores[charKey] += 1;
-        }
-      });
+    function selectAnswer(targetChar) {
+      if (charScores[targetChar] !== undefined) {
+        charScores[targetChar] += 1;
+      }
 
       currentQ++;
       if (currentQ < questions.length) {
@@ -642,23 +637,22 @@
       }
     }
 
+    /* 결정론적 100% 신뢰 계산 로직 */
     function showResult() {
       document.getElementById('quiz-view').style.display = 'none';
       document.getElementById('result-view').style.display = 'block';
 
+      let selectedCharKey = 'chiikawa';
       let maxScore = -1;
-      let topChars = [];
 
+      // 무작위 요소(Math.random)를 완전히 빼고 명확한 고득점자 산출
       for (let charKey in charScores) {
         if (charScores[charKey] > maxScore) {
           maxScore = charScores[charKey];
-          topChars = [charKey];
-        } else if (charScores[charKey] === maxScore) {
-          topChars.push(charKey);
+          selectedCharKey = charKey;
         }
       }
 
-      const selectedCharKey = topChars[Math.floor(Math.random() * topChars.length)];
       currentResultData = results[selectedCharKey] || results.chiikawa;
 
       document.getElementById('res-img').src = currentResultData.img;
@@ -710,7 +704,7 @@
     }
 
     function shareFacebook() {
-      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent('나와 꼭 닮은 먼작귀 캐릭터 찾기 테스트!')}`, '_blank');
     }
 
     function shareNaver() {

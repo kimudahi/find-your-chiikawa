@@ -688,8 +688,6 @@
     
       const data = currentResultData || results.chiikawa;
       const siteUrl = window.location.href;
-    
-      // 상대 경로(./usagi.png)를 절대 경로(https://yourdomain.com/usagi.png)로 변환
       const absoluteImageUrl = new URL(data.img, window.location.href).href;
     
       Kakao.Share.sendDefault({
@@ -697,7 +695,10 @@
         content: {
           title: `나와 닮은 먼작귀 캐릭터는 '${data.name}'!`,
           description: `${data.title}\n"${data.quote}"`,
-          imageUrl: absoluteImageUrl, // 절대 경로 사용
+          // 기존의 큰 imageUrl을 제거하거나 아래 itemContent와 함께 조율
+          imageUrl: absoluteImageUrl,
+          imageWidth: 400, // 카카오 권장 최소 규격 조절
+          imageHeight: 400,
           link: { mobileWebUrl: siteUrl, webUrl: siteUrl }
         },
         buttons: [

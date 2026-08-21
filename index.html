@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>먼작귀 성향 테스트</title>
+  
+  <!-- 카카오 스크랩 메시지 생성을 위한 기본 Open Graph 메타 태그 -->
+  <meta property="og:type" content="website">
+  <meta id="og-title" property="og:title" content="나와 닮은 먼작귀 캐릭터 찾기 테스트">
+  <meta id="og-desc" property="og:description" content="나의 성향과 꼭 닮은 먼작귀 캐릭터와 환상의 케미를 찾아보세요!">
+  <meta id="og-image" property="og:image" content="https://via.placeholder.com/800x400/fff4e6/ff8800?text=Chiikawa+Test">
+  <meta property="og:site_name" content="먼작귀 성향 테스트">
+
+  <!-- Kakao SDK v2.8.1 -->
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.8.1/kakao.min.js" integrity="sha384-OL+ylM/iuPLtW5U3XcvLSGhE8JzReKDank5InqlHGWPhb4140/yrBw0bg0y7+C9J" crossorigin="anonymous"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #f4f5f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 20px 16px;
+    }
+
+    .container {
+      background: #ffffff;
+      width: 100%;
+      max-width: 420px;
+      border-radius: 28px;
+      padding: 32px 24px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+      text-align: center;
+      position: relative;
+    }
+
+    .start-card { display: block; }
+    
+    .cover-img-box {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: #fff4e6;
+      margin: 16px auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 4px solid #ffe0b2;
+      overflow: hidden;
+    }
+
+    .cover-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      background-color: #fff4e6;
+      color: #ff8800;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+
+    .cover-title {
+      font-size: 25px;
+      font-weight: 800;
+      color: #1a1a1a;
+      line-height: 1.35;
+      margin-bottom: 12px;
+      word-break: keep-all;
+    }
+
+    .cover-desc {
+      font-size: 14px;
+      color: #666666;
+      line-height: 1.6;
+      margin-bottom: 32px;
+      word-break: keep-all;
+    }
+
+    .quiz-card { display: none; }
+
+    .progress-container {
+      width: 100%;
+      background-color: #f0f0f2;
+      border-radius: 10px;
+      height: 8px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background-color: #ff8800;
+      border-radius: 10px;
+      transition: width 0.3s ease;
+    }
+
+    .q-number {
+      font-size: 13px;
+      color: #ff8800;
+      font-weight: 800;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .q-text {
+      font-size: 19px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 28px;
+      line-height: 1.4;
+      word-break: keep-all;
+    }
+
+    .btn-option {
+      width: 100%;
+      background-color: #f8f9fa;
+      border: 1.5px solid #e9ecef;
+      border-radius: 18px;
+      padding: 18px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #333333;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+
+    .btn-option:active, .btn-option:hover {
+      background-color: #fff4e6;
+      border-color: #ffb74d;
+      color: #ff8800;
+    }
+
+    .result-card { display: none; }
+
+    .char-img-box {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background-color: #fff4e6;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 4px solid #ffe0b2;
+      box-shadow: 0 8px 20px rgba(255, 136, 0, 0.15);
+    }
+
+    .char-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .sub-title { font-size: 14px; color: #8e8e93; font-weight: 700; margin-bottom: 4px; }
+    .main-title { font-size: 28px; color: #1a1a1a; font-weight: 800; margin-bottom: 14px; }
+
+    .tag-container {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .tag {
+      background-color: #fff4e6;
+      color: #ff8800;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 14px;
+    }
+
+    .quote-box {
+      background-color: #fcf8f2;
+      border-left: 4px solid #ff8800;
+      padding: 12px 16px;
+      border-radius: 6px 14px 14px 6px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #4a4a4a;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .summary-text {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #4a4a4a;
+      margin-bottom: 24px;
+      word-break: keep-all;
+      text-align: left;
+    }
+
+    .info-section {
+      background-color: #f8f9fa;
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    .info-item { margin-bottom: 12px; }
+    .info-item:last-child { margin-bottom: 0; }
+    .info-label { font-size: 12px; font-weight: 800; color: #ff8800; display: block; margin-bottom: 3px; }
+    .info-value { font-size: 14px; color: #2c2c2e; font-weight: 600; line-height: 1.4; }
+
+    .ad-banner-area {
+      width: 100%;
+      min-height: 90px;
+      background-color: #f4f5f7;
+      border: 1px dashed #d1d5db;
+      border-radius: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+
+    .ad-label {
+      font-size: 10px;
+      color: #9ca3af;
+      margin-bottom: 4px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .chemistry-section { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+    .chem-box { border-radius: 18px; padding: 14px 16px; text-align: left; }
+    .chem-box.best { background-color: #f0fdf4; border: 1px solid #bbf7d0; }
+    .chem-box.tikitaka { background-color: #fff1f2; border: 1px solid #fecdd3; }
+    .chem-title { font-size: 13px; font-weight: 800; margin-bottom: 4px; }
+    .chem-box.best .chem-title { color: #166534; }
+    .chem-box.tikitaka .chem-title { color: #9f1239; }
+    .chem-desc { font-size: 13px; color: #374151; line-height: 1.45; }
+
+    .share-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .btn-main-share {
+      width: 100%;
+      padding: 16px;
+      border-radius: 18px;
+      font-size: 15px;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.1s ease, opacity 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-main-share:active { transform: scale(0.98); opacity: 0.9; }
+    
+    .btn-kakao-primary { background-color: #FEE500; color: #191919; }
+    .btn-link-primary { background-color: #333333; color: #ffffff; }
+
+    .sub-sns-group {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .btn-sub-sns {
+      padding: 12px 0;
+      border-radius: 14px;
+      border: none;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+    .btn-sub-sns:active { opacity: 0.8; }
+    .btn-sub-sns.twitter { background-color: #000000; color: #ffffff; }
+    .btn-sub-sns.facebook { background-color: #1877f2; color: #ffffff; }
+    .btn-sub-sns.naver { background-color: #03c75a; color: #ffffff; }
+
+    .btn-restart {
+      width: 100%;
+      padding: 16px;
+      border-radius: 18px;
+      font-size: 14px;
+      font-weight: 700;
+      background-color: #f0f0f2;
+      color: #666666;
+      border: none;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 380px) {
+      .container { padding: 24px 18px; }
+      .cover-title { font-size: 22px; }
+      .q-text { font-size: 17px; }
+      .main-title { font-size: 24px; }
+      .btn-option { padding: 15px; font-size: 13px; }
+      .btn-main-share { padding: 14px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- 1. 표지 (시작 화면) -->
+    <div id="start-view" class="start-card">
+      <span class="cover-badge">성향 테스트</span>
+      <h1 class="cover-title">나와 꼭 닮은<br>먼작귀 캐릭터 찾기</h1>
+      <div class="cover-img-box">
+        <img src="https://via.placeholder.com/150/fff4e6/ff8800?text=Chiikawa" alt="먼작귀 대표 이미지">
+      </div>
+      <p class="cover-desc">나의 성향을 알아보는 10가지 질문!<br>나와 가장 닮은 먼작귀 캐릭터와 케미를 확인해 보세요.</p>
+      <button class="btn-main-share btn-link-primary" style="background-color: #ff8800;" onclick="startTest()">테스트 시작하기</button>
+    </div>
+
+    <!-- 2. 질문지 뷰 -->
+    <div id="quiz-view" class="quiz-card">
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <div class="q-number" id="q-number">QUESTION 01</div>
+      <div class="q-text" id="q-text">질문 텍스트가 들어갑니다.</div>
+      <div id="answer-buttons"></div>
+    </div>
+
+    <!-- 3. 결과 카드 뷰 -->
+    <div id="result-view" class="result-card">
+      <div class="char-img-box">
+        <img id="res-img" src="" alt="캐릭터 이미지">
+      </div>
+      <p class="sub-title" id="res-sub"></p>
+      <h1 class="main-title" id="res-name"></h1>
+      <div class="tag-container" id="res-tags"></div>
+      <div class="quote-box" id="res-quote"></div>
+      <p class="summary-text" id="res-summary"></p>
+
+      <div class="info-section">
+        <div class="info-item">
+          <span class="info-label">🍀 행운의 아이템</span>
+          <p class="info-value" id="res-item"></p>
+        </div>
+        <div class="info-item">
+          <span class="info-label">🍮 힐링 푸드</span>
+          <p class="info-value" id="res-food"></p>
+        </div>
+      </div>
+
+      <!-- 중간 광고 배너 -->
+      <div class="ad-banner-area">
+        <span class="ad-label">ADVERTISEMENT</span>
+        <p style="font-size: 12px; color: #9ca3af;">중간 광고 스크립트 삽입 위치</p>
+      </div>
+
+      <div class="chemistry-section">
+        <div class="chem-box best">
+          <div class="chem-title" id="res-best-title"></div>
+          <div class="chem-desc">서로를 가장 따뜻하게 챙겨주고 응원해 주는 환상의 힐링 조합</div>
+        </div>
+        <div class="chem-box tikitaka">
+          <div class="chem-title" id="res-tiki-title"></div>
+          <div class="chem-desc" id="res-tiki-desc"></div>
+        </div>
+      </div>
+
+      <!-- 공유 섹션 -->
+      <div class="share-section">
+        <!-- 카카오톡 공유 스크랩 버튼 -->
+        <a id="kakaotalk-sharing-btn" href="javascript:;" class="btn-main-share btn-kakao-primary">
+          💬 카카오톡으로 결과 공유하기
+        </a>
+        <button class="btn-main-share btn-link-primary" onclick="copyLink()">
+          🔗 테스트 링크 복사하기
+        </button>
+
+        <div class="sub-sns-group">
+          <button class="btn-sub-sns twitter" onclick="shareTwitter()">X (트위터)</button>
+          <button class="btn-sub-sns facebook" onclick="shareFacebook()">페이스북</button>
+          <button class="btn-sub-sns naver" onclick="shareNaver()">네이버</button>
+        </div>
+
+        <button class="btn-restart" onclick="restartTest()">↺ 다시 테스트하기</button>
+      </div>
+
+      <!-- 하단 광고 배너 -->
+      <div class="ad-banner-area">
+        <span class="ad-label">ADVERTISEMENT</span>
+        <p style="font-size: 12px; color: #9ca3af;">하단 광고 스크립트 삽입 위치</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* 카카오 JavaScript 키 적용 */
+    const JAVASCRIPT_KEY = '45851354763e4eb82596527c8f662c33';
+
+    if (window.Kakao) {
+      if (!Kakao.isInitialized()) {
+        Kakao.init(JAVASCRIPT_KEY);
+      }
+    }
+
+    const questions = [
+      {
+        q: "기다리던 주말 아침! 나만의 시간을 보내는 방식은?",
+        a: [
+          { text: "집에서 아늑하게 혼자만의 소소한 취향을 즐긴다.", score: { I: 1 } },
+          { text: "신나게 밖으로 나가 친구들과 활기차게 시간을 보낸다.", score: { E: 1 } }
+        ]
+      },
+      {
+        q: "갑자기 어려운 시험이나 과제가 주어졌을 때 나는?",
+        a: [
+          { text: "목표를 위해 계획을 세우고 밤낮없이 노력해 이겨낸다.", score: { T: 1 } },
+          { text: "겁부터 나고 불안하지만 소중한 마음으로 차근차근 마주한다.", score: { F: 1 } }
+        ]
+      },
+      {
+        q: "길을 가다 귀여운 디저트 가게를 발견했다!",
+        a: [
+          { text: "“와아-!” 신나서 친구에게 말하고 당장 달려간다.", score: { E: 1 } },
+          { text: "슬쩍 둘러보고 혼자 조용히 맛을 음미하며 힐링한다.", score: { I: 1 } }
+        ]
+      },
+      {
+        q: "누군가 정해진 규칙이나 룰을 무시하고 행동할 때 나는?",
+        a: [
+          { text: "규칙과 질서가 깨지는 것에 대해 지적하거나 속으로 머리가 아프다.", score: { T: 1 } },
+          { text: "당황스럽지만... 그럴 수도 있지 하고 마음으로 넘겨준다.", score: { F: 1 } }
+        ]
+      },
+      {
+        q: "친구들과 나들이를 갔을 때 나의 역할은?",
+        a: [
+          { text: "분위기를 이끌며 추억을 기록해 주는 분위기 메이커", score: { E: 1 } },
+          { text: "튀지 않고 잔잔하게 친구들의 이야기와 페이스를 맞춰주는 역할", score: { I: 1 } }
+        ]
+      },
+      {
+        q: "맛있는 음식과 음료를 먹을 때 나의 스타일은?",
+        a: [
+          { text: "‘크아-!’ 소리가 절로 나오는 제대로 된 안주와 음료를 맛본다.", score: { T: 1 } },
+          { text: "좋아하는 사람과 음식을 서로 나눠먹으며 정을 느낀다.", score: { F: 1 } }
+        ]
+      },
+      {
+        q: "새로운 모임이나 낯선 사람들과 만나는 자리에서 나는?",
+        a: [
+          { text: "먼저 다가가 인사를 건네며 금방 친해진다.", score: { E: 1 } },
+          { text: "구석에서 조용히 상황을 살피며 조심스럽게 적응한다.", score: { I: 1 } }
+        ]
+      },
+      {
+        q: "친구에게 속상한 일이 생겼다는 이야기를 들었을 때 반응은?",
+        a: [
+          { text: "문제의 원인을 차분히 짚어보고 현실적인 조언을 해준다.", score: { T: 1 } },
+          { text: "이야기를 들으며 같이 눈물을 글썽이고 마음 깊이 공감한다.", score: { F: 1 } }
+        ]
+      },
+      {
+        q: "어디론가 여행을 떠날 때 선호하는 계획 스타일은?",
+        a: [
+          { text: "동선과 준비물을 세세하게 미리 정리해 둔다.", score: { T: 1 } },
+          { text: "그날의 기분과 느낌에 맞춰 자유롭게 돌아다닌다.", score: { F: 1 } }
+        ]
+      },
+      {
+        q: "주변 사람들이 나에게 애정이나 칭찬을 건넬 때 나는?",
+        a: [
+          { text: "당당하게 “더 칭찬해 줘!” 하고 관심을 즐긴다.", score: { E: 1 } },
+          { text: "쑥스러워서 얼굴이 빨개지지만 속으로 무척 기뻐한다.", score: { I: 1 } }
+        ]
+      }
+    ];
+
+    const results = {
+      chiikawa: {
+        name: "치이카와", title: "소심하지만 용기 내는 순수파",
+        tags: ["#눈물많은_순수왕", "#소심하지만_용감해", "#귀여움Notice"],
+        quote: "“와... 와아...!”",
+        img: "https://via.placeholder.com/130/ffcdd2/ffffff?text=Chiikawa",
+        summary: "겁은 많고 소심하지만, 소중한 친구를 위해서라면 끝까지 용기를 내어 마주하는 순수한 사람입니다.",
+        item: "곰돌이 포쉐트 (포쉐트 갑옷 씨가 직접 만들어준 분홍 포쉐트)",
+        food: "대형 꿀맛 푸딩 (거대 푸딩 위에서 방방 뛰며 먹는 달콤함)",
+        best: "하치와레", tikitaka: "우사기",
+        tikitakaChem: "우사기의 기상천외한 폭주에 눈물 글썽이며 당황하지만 어느새 같이 신나게 어울리는 조합!"
+      },
+      hachiware: {
+        name: "하치와레", title: "긍정적이고 다정한 분위기 메이커",
+        tags: ["#프로기록러", "#긍정멘탈", "#다정한오지랖"],
+        quote: "“자느타카라(어떻게든 되겠지)!”",
+        img: "https://via.placeholder.com/130/bbdefb/ffffff?text=Hachiware",
+        summary: "어려운 상황에서도 긍정적인 면을 발견하며, 주변 사람들을 따뜻하게 배려하고 기록하기 좋아하는 다정함의 결정체입니다.",
+        item: "블루 카메라 (열심히 보수를 모아 마련한 추억 기록용 카메라)",
+        food: "챠루메라 수제 라멘 (친구를 위해 정성껏 끓여 대접하는 다정한 한 끼)",
+        best: "치이카와", tikitaka: "모몬가",
+        tikitakaChem: "뻔뻔하게 떼를 쓰거나 음식을 빼앗아 먹어도 다정하게 받아주며 식은땀 흘리는 조합!"
+      },
+      usagi: {
+        name: "우사기", title: "거침없는 자유로운 영혼의 마이웨이",
+        tags: ["#마이웨이", "#예측불허", "#숨은고수"],
+        quote: "“우라! 야하-! 하아?!”",
+        img: "https://via.placeholder.com/130/fff9c4/ffffff?text=Usagi",
+        summary: "남들의 시선 따위 신경 쓰지 않는 미지의 실력자! 어디로 튈지 모르지만 예측불허의 반전 능력으로 문제를 해결합니다.",
+        item: "소리 나는 리듬 지팡이 (기괴한 소리를 내며 휘두르는 특이한 도구)",
+        food: "격하게 흔든 라무네 (거품을 뿜어내며 신나게 마시는 시원한 음료)",
+        best: "하치와레", tikitaka: "고블린",
+        tikitakaChem: "고블린이 룰과 감옥으로 통제하려 들수록 신나게 판을 깨부수는 해프닝 조합!"
+      },
+      momonga: {
+        name: "모몬가", title: "귀여움을 무기로 삼는 뻔뻔한 악동",
+        tags: ["#귀여움독점", "#뻔뻔한악동", "#관종만렙"],
+        quote: "“귀여워해라! 칭찬해라!”",
+        img: "https://via.placeholder.com/130/e1bee7/ffffff?text=Momonga",
+        summary: "자신이 귀엽다는 것을 완벽하게 알고 있는 타입! 뻔뻔하고 당당하게 애정을 요구하지만 미워할 수 없는 매력이 있습니다.",
+        item: "폭신폭신 꼬리 빗 (자신의 매력 포인트인 꼬리를 가꾸는 빗)",
+        food: "갓 구운 핫케이크 (남의 음식을 빼앗아 우걱우걱 먹는 욕심쟁이 디저트)",
+        best: "카니", tikitaka: "랏코",
+        tikitakaChem: "아무리 뻔뻔하게 애교를 부려봐도 랏코의 진지한 카리스마와 팩폭 앞에 작아지는 조합!"
+      },
+      kurimanju: {
+        name: "쿠리만쥬", title: "느긋함을 즐기는 낭만파 미식가",
+        tags: ["#어른미식가", "#하아_크아", "#마이웨이혼술"],
+        quote: "“하아아아-! (크아-)”",
+        img: "https://via.placeholder.com/130/d7ccc8/ffffff?text=Kurimanju",
+        summary: "맛있는 음식과 시원한 음료 한 잔이면 세상을 다 얻은 기분! 혼자만의 여유와 미식을 즐기는 느긋한 어른스러운 성향입니다.",
+        item: "휴대용 술잔/텀블러 (허리춤에 차고 다니는 전용 미니 잔)",
+        food: "구운 오징어 다리 (즉석에서 직화로 구워 '하아-!' 소리를 내는 최애 안주)",
+        best: "시사", tikitaka: "우사기",
+        tikitakaChem: "조용히 안주와 음료를 음미하고 싶은데 옆에서 소리를 지르고 음식을 탐내 번잡해지는 조합!"
+      },
+      rakko: {
+        name: "랏코", title: "철저한 자기관리의 완벽주의 실력파",
+        tags: ["#토벌1위", "#반전디저트파", "#철저한자기관리"],
+        quote: "“기억해 둬라... 이 맛을.”",
+        img: "https://via.placeholder.com/130/cfd8dc/ffffff?text=Rakko",
+        summary: "자기 분야에서 최고의 자리에 오른 능력자! 카리스마 넘치는 외면 뒤에 달콤한 디저트를 사랑하는 귀여운 반전 매력이 있습니다.",
+        item: "토벌 랭킹 1위의 검 (강인함과 끊임없는 단련의 상징)",
+        food: "딸기 파르페 (강인한 겉모습 뒤 몰래 디저트 카페에서 즐기는 최애 파르페)",
+        best: "시사", tikitaka: "모몬가",
+        tikitakaChem: "스승으로서 엄격히 단련시키려 해도 떼만 쓰며 게으름 피우는 모습에 난감해지는 조합!"
+      },
+      shisa: {
+        name: "시사", title: "성실함과 예의를 갖춘 자격증 성취파",
+        tags: ["#열정알바생", "#자격증수집가", "#예의바름끝판왕"],
+        quote: "“우레시-! (기뻐요!)”",
+        img: "https://via.placeholder.com/130/ffe0b2/ffffff?text=Shisa",
+        summary: "목표를 세우면 밤낮없이 노력하여 성과를 내는 성실함의 대명사! 항상 예의 바르고 열정적으로 일을 해냅니다.",
+        item: "슈퍼 알바 자격증 (밤낮으로 끊임없이 공부해서 취득한 자격증)",
+        food: "낭풍(郎風) 특제 라멘 (자신이 열심히 일하는 라멘집의 대표 메뉴)",
+        best: "쿠리만쥬", tikitaka: "모몬가",
+        tikitakaChem: "정당하게 얻은 일터에서 뻔뻔하게 알바 자리를 넘보거나 응석을 부려 어쩔 줄 모르는 조합!"
+      }
+    };
+
+    let currentQ = 0;
+    let scores = { E: 0, I: 0, T: 0, F: 0 };
+
+    function startTest() {
+      document.getElementById('start-view').style.display = 'none';
+      document.getElementById('quiz-view').style.display = 'block';
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = questions[currentQ];
+      const qNumText = currentQ + 1 < 10 ? `QUESTION 0${currentQ + 1}` : `QUESTION ${currentQ + 1}`;
+      document.getElementById('q-number').innerText = qNumText;
+      document.getElementById('q-text').innerText = q.q;
+      document.getElementById('progress-bar').style.width = `${((currentQ + 1) / questions.length) * 100}%`;
+
+      const btnContainer = document.getElementById('answer-buttons');
+      btnContainer.innerHTML = '';
+
+      q.a.forEach(ans => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-option';
+        btn.innerText = ans.text;
+        btn.onclick = () => selectAnswer(ans.score);
+        btnContainer.appendChild(btn);
+      });
+    }
+
+    function selectAnswer(score) {
+      for (let key in score) {
+        scores[key] = (scores[key] || 0) + score[key];
+      }
+      currentQ++;
+      if (currentQ < questions.length) {
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('quiz-view').style.display = 'none';
+      document.getElementById('result-view').style.display = 'block';
+
+      const { E, I, T, F } = scores;
+      let resKey = 'chiikawa';
+
+      if (E > I && F > T) {
+        resKey = E >= 4 ? 'hachiware' : 'usagi';
+      } else if (I > E && F > T) {
+        resKey = F >= 4 ? 'chiikawa' : 'momonga';
+      } else if (I > E && T > F) {
+        resKey = T >= 4 ? 'kurimanju' : 'rakko';
+      } else if (E > I && T > F) {
+        resKey = 'shisa';
+      } else {
+        resKey = E > I ? 'hachiware' : 'chiikawa';
+      }
+
+      const data = results[resKey] || results.chiikawa;
+
+      document.getElementById('res-img').src = data.img;
+      document.getElementById('res-sub').innerText = data.title;
+      document.getElementById('res-name').innerText = data.name;
+      document.getElementById('res-quote').innerText = data.quote;
+      document.getElementById('res-summary').innerText = data.summary;
+      document.getElementById('res-item').innerText = data.item;
+      document.getElementById('res-food').innerText = data.food;
+      document.getElementById('res-best-title').innerText = `💖 BEST 짝꿍: ${data.best}`;
+      document.getElementById('res-tiki-title').innerText = `⚡ 환상의 티키타카: ${data.tikitaka}`;
+      document.getElementById('res-tiki-desc').innerText = data.tikitakaChem;
+
+      const tagsContainer = document.getElementById('res-tags');
+      tagsContainer.innerHTML = '';
+      data.tags.forEach(tag => {
+        const span = document.createElement('span');
+        span.className = 'tag';
+        span.innerText = tag;
+        tagsContainer.appendChild(span);
+      });
+
+      // 메타 태그 업데이트
+      document.getElementById('og-title').setAttribute('content', `나와 닮은 먼작귀 캐릭터는 '${data.name}'!`);
+      document.getElementById('og-desc').setAttribute('content', `${data.title} - ${data.quote}`);
+      document.getElementById('og-image').setAttribute('content', data.img);
+
+      // 카카오 스크랩 공유 바인딩
+      if (window.Kakao && Kakao.isInitialized()) {
+        Kakao.Share.createScrapButton({
+          container: '#kakaotalk-sharing-btn',
+          requestUrl: window.location.href,
+        });
+      }
+    }
+
+    function shareTwitter() {
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent('나와 꼭 닮은 먼작귀 캐릭터 찾기 테스트!')}&url=${encodeURIComponent(window.location.href)}`, '_blank');
+    }
+
+    function shareFacebook() {
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
+    }
+
+    function shareNaver() {
+      window.open(`https://share.naver.com/web/shareView?url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent('나와 꼭 닮은 먼작귀 캐릭터 찾기 테스트!')}`, '_blank');
+    }
+
+    function copyLink() {
+      navigator.clipboard.writeText(window.location.href);
+      alert('테스트 링크가 복사되었습니다!');
+    }
+
+    function restartTest() {
+      currentQ = 0;
+      scores = { E: 0, I: 0, T: 0, F: 0 };
+      document.getElementById('result-view').style.display = 'none';
+      document.getElementById('start-view').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

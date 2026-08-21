@@ -6,7 +6,6 @@
   <title>먼작귀 심리 테스트</title>
   <link rel="icon" type="image/x-icon" href="./favicon.ico?v=1">
   
-  <!-- Kakao SDK v2.8.1 -->
   <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.8.1/kakao.min.js" integrity="sha384-OL+ylM/iuPLtW5U3XcvLSGhE8JzReKDank5InqlHGWPhb4140/yrBw0bg0y7+C9J" crossorigin="anonymous"></script>
 
   <style>
@@ -234,7 +233,13 @@
     .chem-box.tikitaka .chem-title { color: #9f1239; }
     .chem-desc { font-size: 13px; color: #374151; line-height: 1.45; }
 
-    /* 공유 버튼 */
+    /* 공유 및 광고 영역 */
+    .ad-container {
+      text-align: center;
+      margin: 20px 0;
+      min-height: 100px;
+    }
+
     .share-section {
       display: flex;
       flex-direction: column;
@@ -309,7 +314,6 @@
 <body>
 
   <div class="container">
-    <!-- 1. 시작 화면 -->
     <div id="start-view" class="start-card">
       <span class="cover-badge">심리 테스트</span>
       <h1 class="cover-title">나와 잘 어울리는<br>먼작귀 캐릭터 찾기</h1>
@@ -320,7 +324,6 @@
       <button class="btn-main-share btn-link-primary" onclick="startTest()">테스트 시작하기</button>
     </div>
 
-    <!-- 2. 질문 화면 -->
     <div id="quiz-view" class="quiz-card">
       <div class="progress-container">
         <div class="progress-bar" id="progress-bar"></div>
@@ -330,7 +333,6 @@
       <div id="answer-buttons"></div>
     </div>
 
-    <!-- 3. 결과 화면 -->
     <div id="result-view" class="result-card">
       <div class="char-img-box">
         <img id="res-img" src="" alt="캐릭터 이미지">
@@ -363,7 +365,14 @@
         </div>
       </div>
 
-      <!-- 공유 섹션 -->
+      <div class="ad-container">
+        <ins class="kakao_ad_area" style="display:none;"
+          data-ad-unit = "DAN-DGe2UeIwC33JoezS"
+          data-ad-width = "320"
+          data-ad-height = "100"></ins>
+        <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+      </div>
+
       <div class="share-section">
         <button class="btn-main-share btn-kakao-primary" onclick="shareKakao()">
           💬 카카오톡으로 결과 공유하기
@@ -501,7 +510,7 @@
         tags: ["#귀여움독점", "#뻔뻔한악동", "#관종만렙"],
         quote: "“귀여워해라! 칭찬해라!”",
         img: "https://via.placeholder.com/300x300/e1f5fe/0277bd?text=Momonga",
-        summary: "자신이 귀엽다는 것을 완벽하게 알고 있는 타입! 뻔뻔하고 당당하게 애정을 요구하지만 미워할 수 없는 매력이 있습니다.",
+        summary: "자신의 귀여움을 완벽하게 알고 있는 타입! 뻔뻔하고 당당하게 애정을 요구하지만 미워할 수 없는 매력이 있습니다.",
         item: "폭신폭신 꼬리 빗", food: "갓 구운 핫케이크",
         best: "카니", tikitaka: "랏코",
         tikitakaChem: "아무리 뻔뻔하게 애교를 부려봐도 랏코의 진지한 카리스마와 팩폭 앞에 작아지는 조합!"
@@ -621,15 +630,6 @@
       });
     }
 
-    <!-- 카카오 애드핏 광고 영역 -->
-    <div style="text-align: center; margin: 20px 0; min-height: 100px;">
-      <ins class="kakao_ad_area" style="display:none;"
-        data-ad-unit = "DAN-DGe2UeIwC33JoezS"
-        data-ad-width = "320"
-        data-ad-height = "100"></ins>
-      <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
-    </div>
-
     // 카카오톡 공유 (sendDefault API 방식)
     function shareKakao() {
       if (!window.Kakao) {
@@ -642,6 +642,7 @@
       }
 
       const data = currentResultData || results.chiikawa;
+      const siteUrl = window.location.origin;
 
       Kakao.Share.sendDefault({
         objectType: 'feed',
@@ -650,16 +651,16 @@
           description: `${data.title}\n"${data.quote}"`,
           imageUrl: data.img,
           link: {
-            mobileWebUrl: window.location.href,
-            webUrl: window.location.href,
+            mobileWebUrl: siteUrl,
+            webUrl: siteUrl,
           },
         },
         buttons: [
           {
             title: '나도 테스트해보기',
             link: {
-              mobileWebUrl: window.location.href,
-              webUrl: window.location.href,
+              mobileWebUrl: siteUrl,
+              webUrl: siteUrl,
             },
           },
         ],
@@ -667,19 +668,19 @@
     }
 
     function shareTwitter() {
-      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent('나와 꼭 닮은 먼작귀 캐릭터 찾기 테스트!')}&url=${encodeURIComponent(window.location.href)}`, '_blank');
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent('나와 꼭 닮은 먼작귀 캐릭터 찾기 테스트!')}&url=${encodeURIComponent(window.location.origin)}`, '_blank');
     }
 
     function shareFacebook() {
-      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin)}`, '_blank');
     }
 
     function shareNaver() {
-      window.open(`https://share.naver.com/web/shareView?url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent('나와 꼭 닮은 먼작귀 캐릭터 찾기 테스트!')}`, '_blank');
+      window.open(`https://share.naver.com/web/shareView?url=${encodeURIComponent(window.location.origin)}&title=${encodeURIComponent('나와 꼭 닮은 먼작귀 캐릭터 찾기 테스트!')}`, '_blank');
     }
 
     function copyLink() {
-      navigator.clipboard.writeText(window.location.href);
+      navigator.clipboard.writeText(window.location.origin);
       alert('테스트 링크가 복사되었습니다!');
     }
 

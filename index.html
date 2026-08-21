@@ -181,41 +181,66 @@
       border-radius: 14px;
     }
 
-    /* 명대사 영역: 깔끔한 테두리 및 중앙 정렬 카드 스타일로 변경 */
+    /* 명대사 카드 전면 개편 스타일 (테두리 카드 형태) */
     .quote-box {
-      background-color: #f8fcff;
-      border: 1.5px solid #b3e5fc;
-      padding: 14px 18px;
-      border-radius: 16px;
-      font-size: 14.5px;
-      font-weight: 700;
-      color: #0277bd;
-      margin-bottom: 18px;
-      text-align: center;
-      word-break: keep-all;
+      background-color: #f0f9ff !important;
+      border: 2px solid #0288d1 !important;
+      border-radius: 18px !important;
+      padding: 16px 20px !important;
+      font-size: 15px !important;
+      font-weight: 700 !important;
+      color: #01579b !important;
+      margin-bottom: 18px !important;
+      text-align: center !important;
+      word-break: keep-all !important;
+      box-shadow: 0 4px 12px rgba(2, 136, 209, 0.08) !important;
     }
 
     .summary-text {
       font-size: 14px;
-      line-height: 1.6;
-      color: #4a4a4a;
+      line-height: 1.65;
+      color: #374151;
       margin-bottom: 22px;
       word-break: keep-all;
       text-align: left;
     }
 
+    /* 행운의 아이템 & 힐링 푸드 2컬럼 반반 섹션 */
     .info-section {
-      background-color: #f8f9fa;
-      border-radius: 20px;
-      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
       margin-bottom: 20px;
-      text-align: left;
     }
 
-    .info-item { margin-bottom: 8px; }
-    .info-item:last-child { margin-bottom: 0; }
-    .info-label { font-size: 12px; font-weight: 800; color: #0277bd; display: block; margin-bottom: 2px; }
-    .info-value { font-size: 14px; color: #2c2c2e; font-weight: 600; }
+    .info-item {
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 16px;
+      padding: 14px 10px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .info-label {
+      font-size: 12px;
+      font-weight: 800;
+      color: #0277bd;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .info-value {
+      font-size: 13.5px;
+      color: #1f2937;
+      font-weight: 700;
+      word-break: keep-all;
+    }
 
     .chemistry-section { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
     .chem-box { border-radius: 16px; padding: 14px 16px; text-align: left; }
@@ -263,7 +288,6 @@
       cursor: pointer;
     }
 
-    /* SNS 로고 아이콘 전용 서브 그룹 */
     .sub-sns-group {
       display: flex;
       justify-content: center;
@@ -330,6 +354,7 @@
       <div class="quote-box" id="res-quote"></div>
       <p class="summary-text" id="res-summary"></p>
 
+      <!-- 왼쪽/오른쪽 반반 섹션 구성 -->
       <div class="info-section">
         <div class="info-item">
           <span class="info-label">🍀 행운의 아이템</span>
@@ -352,7 +377,6 @@
         </div>
       </div>
 
-      <!-- 공유 및 다시하기 섹션 -->
       <div class="share-section">
         <button class="btn-main-share btn-kakao-primary" onclick="shareKakao()">
           💬 카카오톡 결과 공유
@@ -362,7 +386,6 @@
         </button>
         <button class="btn-restart" onclick="restartTest()">↺ 다시 테스트하기</button>
 
-        <!-- 다시 테스트하기 버튼 아래로 이동한 SNS 로고 전용 버튼 -->
         <div class="sub-sns-group">
           <button class="btn-sub-sns twitter" onclick="shareTwitter()" title="X(트위터) 공유">
             <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -478,96 +501,97 @@
       }
     ];
 
+    /* 각 캐릭터 설명글을 최소 3줄 이상으로 풍성하게 구성 */
     const results = {
       chiikawa: {
         name: "치이카와", title: "소심하지만 용기 내는 순수파",
         tags: ["#순수함", "#소심하지만_용감해", "#귀여움"],
         quote: "“와... 와아...!”",
         img: "./chiikawa.png",
-        summary: "겁은 많고 소심하지만, 소중한 친구를 위해서라면 끝까지 용기를 내어 마주하는 순수한 성향입니다.",
+        summary: "겁은 많고 소심한 편이지만, 주변 사람들을 깊이 사랑하며 마음을 써주는 순수한 영혼의 소유자입니다. 위기 상황이 찾아오면 눈물을 흘리면서도 소중한 이들을 지키기 위해 끝까지 용기를 내어 마주합니다. 차분하고 다정한 성품 덕분에 주변에 늘 따뜻한 위로와 힐링을 선사합니다.",
         item: "곰돌이 포쉐트", food: "대형 꿀맛 푸딩",
         best: "하치와레", tikitaka: "우사기",
-        tikitakaChem: "우사기의 폭주에 당황하면서도 어느새 같이 신나게 어울리는 조합!"
+        tikitakaChem: "우사기의 엉뚱한 폭주에 당황해하면서도 결국엔 신나게 함께 어울리는 귀여운 조합!"
       },
       hachiware: {
         name: "하치와레", title: "긍정적이고 다정한 분위기 메이커",
         tags: ["#긍정왕", "#다정한배려", "#프로기록러"],
         quote: "“자느타카라(어떻게든 되겠지)!”",
         img: "./hachiware.png",
-        summary: "어려운 상황에서도 긍정을 발견하고 주변을 따뜻하게 배려하는 다정함의 결정체입니다.",
+        summary: "어려운 상황에 직면해도 항상 Positive한 태도를 유지하며 주변 사람들에게 밝은 에너지를 전파합니다. 타인의 마음을 세심하게 읽고 배려하며, 소중한 순간들을 카메라에 담아 기억하는 것을 좋아합니다. 어떤 문제든 '어떻게든 될 거야!'라는 든든한 믿음으로 극복해 나가는 분위기 메이커입니다.",
         item: "블루 카메라", food: "수제 라멘",
         best: "치이카와", tikitaka: "모몬가",
-        tikitakaChem: "뻔뻔하게 떼를 써도 다정하게 받아주며 식은땀 흘리는 조합!"
+        tikitakaChem: "뻔뻔하게 떼를 쓰고 요구하는 모몬가의 태도에도 다정하게 맞춰주며 식은땀 흘리는 조합!"
       },
       usagi: {
         name: "우사기", title: "자유로운 영혼의 마이웨이",
         tags: ["#마이웨이", "#예측불허", "#숨은고수"],
         quote: "“우라! 야하-! 하아?!”",
         img: "./usagi.png",
-        summary: "남들의 시선은 신경 쓰지 않는 자유로운 실력자! 어디로 튈지 모르는 반전 매력이 있습니다.",
+        summary: "남들의 시선이나 사회적 틀에 전혀 연연하지 않는 진정한 마이웨이 스타일의 소유자입니다. 어디로 튈지 모르는 엉뚱함 뒤에는 어떤 문제든 순식간에 해결해 내는 남다른 능력과 행동력이 숨어있습니다. 특유의 당당함과 거침없는 에너지로 주변에 언제나 다채로운 활력을 불어넣어 줍니다.",
         item: "리듬 지팡이", food: "흔든 라무네",
         best: "하치와레", tikitaka: "고블린",
-        tikitakaChem: "상대의 규칙을 신나게 깨부수는 해프닝 조합!"
+        tikitakaChem: "상대방의 엄격한 규칙이나 계획을 신나게 깨부수며 해프닝을 만들어내는 조합!"
       },
       momonga: {
         name: "모몬가", title: "귀여움을 무기로 삼는 악동",
         tags: ["#귀여움독점", "#뻔뻔함", "#관심집중"],
         quote: "“귀여워해라! 칭찬해라!”",
         img: "./momonga.png",
-        summary: "자신의 매력을 잘 알고 있으며, 당당하게 애정을 요구하지만 미워할 수 없는 매력이 있습니다.",
+        summary: "자신의 귀여움과 매력을 온전히 알고 있으며, 이를 적극적으로 활용해 관심받기를 즐깁니다. 당당하게 애정과 칭찬을 요구하는 뻔뻔함이 있지만, 결코 미워할 수 없는 유쾌한 악동 매력을 가지고 있습니다. 솔직하고 솔직한 감정 표현으로 어디서나 확실한 존재감을 드러내는 타입입니다.",
         item: "폭신 꼬리 빗", food: "갓 구운 핫케이크",
         best: "카니", tikitaka: "랏코",
-        tikitakaChem: "아무리 애교를 부려도 랏코의 진지함 앞에 작아지는 조합!"
+        tikitakaChem: "아무리 귀여운 척 애교를 부려도 랏코의 무거운 진지함 앞에서는 작아지는 조용한 조합!"
       },
       kurimanju: {
         name: "쿠리만쥬", title: "여유를 즐기는 낭만 미식가",
         tags: ["#어른미식가", "#여유로움", "#혼술낭만"],
         quote: "“하아아아-! (크아-)”",
         img: "./kurimanju.png",
-        summary: "맛있는 음식과 음료 한 잔으로 힐링하는, 느긋하고 어른스러운 성향의 소유자입니다.",
+        summary: "바쁜 일상 속에서도 맛있는 음식과 한 잔의 음료로 삶의 여유를 만끽할 줄 아는 낭만파입니다. 말수는 적고 무심해 보이지만 주변 사람들을 은근히 챙기는 어른스러운 따뜻함을 지니고 있습니다. 복잡한 생각 대신 현재의 소소한 행복에 집중하며 진정한 미식의 즐거움을 아는 삶을 살아갑니다.",
         item: "휴대용 텀블러", food: "구운 오징어 다리",
         best: "시사", tikitaka: "우사기",
-        tikitakaChem: "조용히 여유를 즐기고 싶은데 옆에서 시끄럽게 구는 조합!"
+        tikitakaChem: "조용하게 한잔하며 여유를 즐기고 싶은데 옆에서 정신없이 시끄럽게 구는 조합!"
       },
       rakko: {
         name: "랏코", title: "철저한 자기관리의 완벽주의자",
         tags: ["#실력파", "#반전매력", "#카리스마"],
         quote: "“기억해 둬라... 이 맛을.”",
         img: "./rakko.png",
-        summary: "최고의 자리에 오른 능력자! 카리스마 넘치는 모습 뒤에 디저트를 사랑하는 반전이 있습니다.",
+        summary: "자신이 맡은 분야에서 최정상의 자리에 오른 능력자이자 끊임없이 노력하는 완벽주의자입니다. 겉으로는 범접할 수 없는 카리스마를 풍기지만, 알고 보면 달콤한 디저트에 감동받는 반전 귀여움을 가졌습니다. 자신에게는 엄격하지만 후배나 약자에게는 아낌없이 지혜와 도움을 주는 진정한 스승 스타일입니다.",
         item: "토벌 1위의 검", food: "딸기 파르페",
         best: "시사", tikitaka: "모몬가",
-        tikitakaChem: "엄격하게 가르치려 해도 게으름 피우는 모습에 난감해하는 조합!"
+        tikitakaChem: "엄격하고 진지하게 가르치려 해도 자꾸 게으름 피우는 모습에 어리둥절해하는 조합!"
       },
       shisa: {
         name: "시사", title: "성실함과 예의를 갖춘 노력파",
         tags: ["#열정파", "#자격증수집", "#예의바름"],
         quote: "“우레시-! (기뻐요!)”",
         img: "./shisa.png",
-        summary: "목표를 세우면 밤낮없이 노력하여 성과를 내는 성실함과 예의를 갖춘 모범생 스타일입니다.",
+        summary: "목표가 생기면 될 때까지 밤낮으로 정성을 다해 노력하여 반드시 성과를 만들어내는 성실파입니다. 누구에게나 깍듯하고 예의 바른 태도로 대하며, 자신이 좋아하는 일에는 깊은 열정을 쏟아붓습니다. 끈기와 따뜻한 인성을 겸비하고 있어 주위 사람들에게 깊은 신뢰와 사랑을 한 몸에 받는 모범생입니다.",
         item: "슈퍼 알바 자격증", food: "특제 라멘",
         best: "쿠리만쥬", tikitaka: "모몬가",
-        tikitakaChem: "일터에서 뻔뻔하게 응석을 부려 난감해지는 조합!"
+        tikitakaChem: "일터에서 일은 안 하고 뻔뻔하게 응석을 부려서 자꾸 당황하게 만드는 조합!"
       },
       kani: {
         name: "카니 (중고서점)", title: "조용하고 따뜻한 지성파",
         tags: ["#책방주인", "#은근한배려", "#차분함"],
         quote: "“...이 책, 읽어볼래?”",
         img: "./kani.png",
-        summary: "차분하게 자신의 자리를 지키며, 다정한 배려심으로 주변을 따뜻하게 챙깁니다.",
+        summary: "차분하게 자신의 자리를 지키며, 다정한 배려심으로 주변을 따뜻하게 챙겨주는 지성적인 성향입니다. 깊이 있는 생각과 넓은 지식으로 상대방의 고민을 조용히 들어주고 실질적인 도움을 건넵니다. 세심한 관찰력을 지녀 타인의 작은 변화나 필요한 부분을 귀신같이 알아채고 소틀지만 진심 어린 마음을 표합니다.",
         item: "게 머리띠", food: "따뜻한 보리차",
         best: "모몬가", tikitaka: "우사기",
-        tikitakaChem: "조용한 서점에 불쑥 찾아와 장난치는 우사기 때문에 당황하는 조합!"
+        tikitakaChem: "조용한 서점에 불쑥 나타나 예상치 못한 장난을 치는 우사기 때문에 영혼이 탈곡되는 조합!"
       },
       ode: {
         name: "오데", title: "묵직하고 신비로운 지키미",
         tags: ["#신비로움", "#묵직한온정", "#든든함"],
         quote: "“너희는... 따뜻한 존재구나.”",
         img: "./ode.png",
-        summary: "말수는 적지만 한번 마음을 준 친구에게는 변함없는 호의와 든든함을 보여줍니다.",
+        summary: "말수는 적고 과묵하지만, 한번 인연을 맺은 사람에게는 변함없는 호의와 온정을 전해줍니다. 커다란 존재감만큼이나 깊은 포용력을 지니고 있어 위험한 상황에서도 타인을 먼저 지켜내고자 합니다. 표현은 서툴지 몰라도 진심이 담긴 행동 하나하나가 주변인들에게 큰 감동과 든든함을 안겨줍니다.",
         item: "감옥 열쇠", food: "야채 스튜",
         best: "치이카와", tikitaka: "쿠리만쥬",
-        tikitakaChem: "서로 조용히 안부만 건네며 음식을 나누어 먹는 묵직한 케미!"
+        tikitakaChem: "서로 말없이 조용히 안부만 건네며 조용히 음식을 나눠 먹는 묵직한 마이웨이 케미!"
       }
     };
 
@@ -645,7 +669,7 @@
       document.getElementById('res-item').innerText = currentResultData.item;
       document.getElementById('res-food').innerText = currentResultData.food;
       document.getElementById('res-best-title').innerText = `💖 BEST 짝꿍: ${currentResultData.best}`;
-      document.getElementById('res-tiki-title').innerText = `⚡ 환상의 티키타카: ${currentResultData.tikitaka}`;
+      document.getElementById('res-tiki-title').innerText = `⚡ 환장의 티키타카: ${currentResultData.tikitaka}`;
       document.getElementById('res-tiki-desc').innerText = currentResultData.tikitakaChem;
 
       const tagsContainer = document.getElementById('res-tags');

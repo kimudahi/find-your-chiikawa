@@ -40,20 +40,26 @@
 
     .start-card { display: block; }
     
+    /* 메인 커버 이미지 박스 및 스타일 수정 */
     .cover-img-box {
-      width: 160px;
-      height: 160px;
-      margin: 12px auto 20px;
+      width: 220px;
+      height: 220px;
+      margin: 16px auto 24px;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: transparent;
+      border: none;
+      outline: none;
     }
 
     .cover-img-box img {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.08));
+      filter: none; /* 경계선 및 그림자 효과 제거 */
+      border: none;
+      outline: none;
     }
 
     .cover-badge {
@@ -314,6 +320,7 @@
     @media (max-width: 380px) {
       .container { padding: 24px 16px; }
       .cover-title { font-size: 21px; }
+      .cover-img-box { width: 180px; height: 180px; }
       .q-text { font-size: 16px; }
       .main-title { font-size: 22px; }
       .btn-option { padding: 12px; font-size: 13px; }
@@ -405,7 +412,6 @@
       Kakao.init(JAVASCRIPT_KEY);
     }
 
-    /* 1대1 선명한 매칭 구조로 재설계한 질문 목록 */
     const questions = [
       {
         q: "주말 휴일에 주로 어떤 시간을 보낼 때 가장 행복한가요?",
@@ -637,7 +643,6 @@
       }
     }
 
-    /* 결정론적 100% 신뢰 계산 로직 */
     function showResult() {
       document.getElementById('quiz-view').style.display = 'none';
       document.getElementById('result-view').style.display = 'block';
@@ -645,7 +650,6 @@
       let selectedCharKey = 'chiikawa';
       let maxScore = -1;
 
-      // 무작위 요소(Math.random)를 완전히 빼고 명확한 고득점자 산출
       for (let charKey in charScores) {
         if (charScores[charKey] > maxScore) {
           maxScore = charScores[charKey];
@@ -704,7 +708,7 @@
     }
 
     function shareFacebook() {
-      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent('나와 꼭 닮은 먼작귀 캐릭터 찾기 테스트!')}`, '_blank');
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
     }
 
     function shareNaver() {

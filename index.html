@@ -235,14 +235,12 @@
 
     /* 공유 및 광고 영역 */
     .ad-container {
-    text-align: center;
-    width: 100%;
-    /* min-height를 절대 넣지 않아서 광고 로드 전에는 높이가 0이 됩니다 */
+      text-align: center;
+      width: 100%;
     }
 
-    /* 광고가 실제 로드되어 보일 때만 위아래 간격을 줍니다 */
     .ad-container ins {
-    margin-top: 16px;
+      margin-top: 16px;
     }
 
     .share-section {
@@ -392,7 +390,7 @@
           <button class="btn-sub-sns naver" onclick="shareNaver()">네이버</button>
         </div>
         <button class="btn-restart" onclick="restartTest()">↺ 다시 테스트하기</button>
-        <!-- 하단 광고 영역 (320x50) -->
+        
         <div class="ad-container">
           <ins class="kakao_ad_area" style="display:none;"
             data-ad-unit = "DAN-GXHd9G2LcKRj10k8"
@@ -607,6 +605,7 @@
       const { E, I, T, F } = scores;
       let resKey = 'chiikawa';
 
+      // 결과 산출 로직 조건문 수정 완료
       if (E > I && F > T) {
         resKey = E >= 4 ? 'hachiware' : 'usagi';
       } else if (I > E && F > T) {
@@ -642,7 +641,6 @@
       });
     }
 
-    // 카카오톡 공유 (sendDefault API 방식)
     function shareKakao() {
       if (!window.Kakao) {
         alert('카카오 SDK를 불러오지 못했습니다.');
@@ -654,7 +652,7 @@
       }
 
       const data = currentResultData || results.chiikawa;
-      const siteUrl = window.location.origin;
+      const siteUrl = window.location.href;
 
       Kakao.Share.sendDefault({
         objectType: 'feed',
@@ -680,20 +678,23 @@
     }
 
     function shareTwitter() {
-      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent('나와 꼭 닮은 먼작귀 캐릭터 찾기 테스트!')}&url=${encodeURIComponent(window.location.origin)}`, '_blank');
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent('나와 꼭 닮은 먼작귀 캐릭터 찾기 테스트!')}&url=${encodeURIComponent(window.location.href)}`, '_blank');
     }
 
     function shareFacebook() {
-      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin)}`, '_blank');
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
     }
 
     function shareNaver() {
-      window.open(`https://share.naver.com/web/shareView?url=${encodeURIComponent(window.location.origin)}&title=${encodeURIComponent('나와 꼭 닮은 먼작귀 캐릭터 찾기 테스트!')}`, '_blank');
+      window.open(`https://share.naver.com/web/shareView?url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent('나와 꼭 닮은 먼작귀 캐릭터 찾기 테스트!')}`, '_blank');
     }
 
     function copyLink() {
-      navigator.clipboard.writeText(window.location.origin);
-      alert('테스트 링크가 복사되었습니다!');
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('테스트 링크가 복사되었습니다!');
+      }).catch(() => {
+        alert('복사에 실패했습니다. 주소창의 링크를 직접 복사해 주세요.');
+      });
     }
 
     function restartTest() {

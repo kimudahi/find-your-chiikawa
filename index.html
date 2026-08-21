@@ -685,16 +685,19 @@
         alert('카카오 SDK를 불러오지 못했습니다.');
         return;
       }
-
+    
       const data = currentResultData || results.chiikawa;
       const siteUrl = window.location.href;
-
+    
+      // 상대 경로(./usagi.png)를 절대 경로(https://yourdomain.com/usagi.png)로 변환
+      const absoluteImageUrl = new URL(data.img, window.location.href).href;
+    
       Kakao.Share.sendDefault({
         objectType: 'feed',
         content: {
           title: `나와 닮은 먼작귀 캐릭터는 '${data.name}'!`,
           description: `${data.title}\n"${data.quote}"`,
-          imageUrl: data.img,
+          imageUrl: absoluteImageUrl, // 절대 경로 사용
           link: { mobileWebUrl: siteUrl, webUrl: siteUrl }
         },
         buttons: [

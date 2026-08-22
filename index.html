@@ -10,11 +10,28 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: #f7f9fa;
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px 10px;
+    }
+    
+    /* 광고 레이아웃 - 심사 승인 전 빈 상자일 때도 영역(90px)을 확실히 유지 */
+    .ad-container {
+      width: 100%;
+      max-width: 480px;
+      min-height: 90px;
+      margin: 12px 0;
+      background-color: #ffffff;
+      border: 1px dashed #cbd5e1;
+      border-radius: 12px;
+      display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      padding: 20px;
+      overflow: hidden;
     }
+
     .card {
       background: #ffffff;
       width: 100%;
@@ -87,9 +104,22 @@
 </head>
 <body>
 
-<div class="card" id="app">
-  <!-- Dynamic Rendering -->
-</div>
+  <!-- [상단 광고 영역] -->
+  <div class="ad-container" id="ad-top">
+    <!-- 발급받은 광고 스크립트를 이 자리에 넣으세요 -->
+    <span style="font-size: 12px; color: #94a3b8;">광고 영역 (Top Ad)</span>
+  </div>
+
+  <!-- 메인 테스트 영역 -->
+  <div class="card" id="app">
+    <!-- Dynamic Rendering -->
+  </div>
+
+  <!-- [하단 광고 영역] -->
+  <div class="ad-container" id="ad-bottom">
+    <!-- 발급받은 광고 스크립트를 이 자리에 넣으세요 -->
+    <span style="font-size: 12px; color: #94a3b8;">광고 영역 (Bottom Ad)</span>
+  </div>
 
 <script>
 // 1. 캐릭터 기본 데이터 (9명)
@@ -105,7 +135,7 @@ const characters = {
   ode: { name: "오데", desc: "커다란 울타리처럼 다 함께 어울리는 환경을 만들고, 기꺼이 든든한 버팀목이 되어주는 타입입니다." }
 };
 
-// 2. 9개 공평 문항 (문항당 1명의 targetChar에게만 가중치 +2점 부여)
+// 2. 9개 공평 문항
 const questions = [
   {
     targetChar: "chiikawa",
@@ -205,14 +235,14 @@ let charScores = {
   chiikawa: 0, hachiware: 0, usagi: 0, momonga: 0,
   kurimanju: 0, rakko: 0, shisa: 0, kani: 0, ode: 0
 };
-let userAnswers = []; // 각 질문별 사용자가 고른 캐릭터 저장
+let userAnswers = [];
 
 // 4. 질문 화면 렌더링
 function renderQuestion() {
   const app = document.getElementById("app");
   const qData = questions[currentQ];
 
-  let optionsHtml = qData.a.map((opt, idx) => `
+  let optionsHtml = qData.a.map((opt) => `
     <button class="btn-option" onclick="handleSelect('${opt.char}')">
       ${opt.text}
     </button>
@@ -229,11 +259,8 @@ function renderQuestion() {
 function handleSelect(selectedChar) {
   const currentQuestionData = questions[currentQ];
 
-  // 가중치 산출: 해당 문항의 시그니처 캐릭터면 +2점, 아니면 +1점
   const addedScore = (selectedChar === currentQuestionData.targetChar) ? 2 : 1;
   charScores[selectedChar] += addedScore;
-
-  // 타이브레이커 판정을 위한 사용자 응답 저장
   userAnswers[currentQ] = selectedChar;
 
   currentQ++;
@@ -244,34 +271,27 @@ function handleSelect(selectedChar) {
   }
 }
 
-// 6. 결과 산출 및 타이브레이커 로직
+// 6. 결과 산출 및 타이브레이커
 function showResult() {
   let maxScore = -1;
 
-  // 최고 점수 찾기
   for (let charKey in charScores) {
     if (charScores[charKey] > maxScore) {
       maxScore = charScores[charKey];
     }
   }
 
-  // 최고 점수 동점자 수집
   const topChars = Object.keys(charScores).filter(
     charKey => charScores[charKey] === maxScore
   );
 
   let finalChar = topChars[0];
 
-  // [타이브레이커 작동] 동점자가 2명 이상인 경우
   if (topChars.length > 1) {
     let resolved = false;
 
-    // 1차: 동점자 중 '자신의 시그니처 문항(+2점)'에서 고름을 받은 캐릭터 선출
     for (let charKey of topChars) {
-      // 해당 캐릭터가 targetChar였던 질문의 인덱스 탐색
       const targetQuestionIdx = questions.findIndex(q => q.targetChar === charKey);
-      
-      // 사용자가 그 질문에서 실제로 해당 캐릭터를 선택했는지 확인
       if (targetQuestionIdx !== -1 && userAnswers[targetQuestionIdx] === charKey) {
         finalChar = charKey;
         resolved = true;
@@ -279,7 +299,6 @@ function showResult() {
       }
     }
 
-    // 2차: 시그니처 문항 선택으로도 안 풀릴 경우, 앞선 질문(Q1~)에서 먼저 고른 캐릭터 선택
     if (!resolved) {
       for (let i = 0; i < userAnswers.length; i++) {
         if (topChars.includes(userAnswers[i])) {
@@ -290,7 +309,6 @@ function showResult() {
     }
   }
 
-  // 결과 화면 출력
   renderResult(finalChar);
 }
 

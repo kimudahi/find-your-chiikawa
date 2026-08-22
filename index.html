@@ -486,9 +486,9 @@
           친구에게 공유하기
         </button>
         <button class="btn-main-share btn-link-primary" onclick="copyLink()">
-          테스트 링크 복사
+          결과 링크 복사
         </button>
-        <button class="btn-restart" onclick="restartTest()">다시 테스트하기</button>
+        <button class="btn-restart" onclick="restartTest()">나도 테스트하기</button>
 
         <div class="sub-sns-group">
           <button class="btn-sub-sns twitter" onclick="shareTwitter()" title="X(트위터) 공유">
@@ -607,6 +607,7 @@
 
     const results = {
       chiikawa: {
+        id: "chiikawa",
         name: "치이카와", title: "무서워도 결국은 용기를 내는 주인공",
         tags: ["#퓨어햄스터", "#귀여움", "#소심이"],
         quote: "“와.. 와아...!”",
@@ -621,6 +622,7 @@
         best: "하치와레", tikitaka: "모몽가"
       },
       hachiware: {
+        id: "hachiware",
         name: "하치와레", title: "다정하고 긍정적인 분위기 메이커",
         tags: ["#인싸고양이", "#다정다감", "#프로기록러"],
         quote: "“어떻게든 돼라!”",
@@ -635,6 +637,7 @@
         best: "치이카와", tikitaka: "모몽가"
       },
       usagi: {
+        id: "usagi",
         name: "우사기", title: "거침없이 돌진하는 마이웨이의 소유자",
         tags: ["#광기토끼", "#예측불허", "#숨은고수"],
         quote: "“우라! 야하! 하아?”",
@@ -649,6 +652,7 @@
         best: "치이카와", tikitaka: "모몽가"
       },
       momonga: {
+        id: "momonga",
         name: "모몽가", title: "뻔뻔함도 실력! 귀여움으로 무장한 떼쟁이",
         tags: ["#하늘다람쥐", "#폭신한꼬리", "#관종"],
         quote: "“귀여워해라! 칭찬해라!”",
@@ -663,6 +667,7 @@
         best: "카니", tikitaka: "우사기"
       },
       kurimanju: {
+        id: "kurimanju",
         name: "쿠리만쥬", title: "술 한 잔의 여유를 아는 낭만 미식가",
         tags: ["#애주가수달", "#혼술", "#츤데레"],
         quote: "“캬-!”",
@@ -677,6 +682,7 @@
         best: "시사", tikitaka: "우사기"
       },
       rakko: {
+        id: "rakko",
         name: "랏코", title: "카리스마 넘치는 든든한 랭킹 1위",
         tags: ["#실력파해달", "#디저트매니아", "#반전매력"],
         quote: "“강해지려면 브로콜리도 남기지 말고 먹어야해”",
@@ -691,6 +697,7 @@
         best: "하치와레", tikitaka: "모몽가"
       },
       shisa: {
+        id: "shisa",
         name: "시사", title: "성실함과 예의를 갖춘 아르바이트생",
         tags: ["#수호신", "#노력파", "#라멘집알바"],
         quote: "“사부님!”",
@@ -705,6 +712,7 @@
         best: "쿠리만쥬", tikitaka: "모몽가"
       },
       kani: {
+        id: "kani",
         name: "카니", title: "조용하고 따뜻한 지성파",
         tags: ["#헌책방주인", "#상냥함", "#수용력100%"],
         quote: "“헤헷!”",
@@ -719,6 +727,7 @@
         best: "모몽가", tikitaka: "우사기"
       },
       ode: {
+        id: "ode",
         name: "오데", title: "커다란 덩치에 숨겨진 의리와 외로움",
         tags: ["#외눈박이거인", "#고블린경호원", "#든든함"],
         quote: "“또 같이 놀자!”",
@@ -741,6 +750,18 @@
       shisa: 0, kani: 0, ode: 0
     };
     let currentResultData = null;
+
+    // 페이지 접속 시 URL 파라미터 체크 (?result=xxx 확인)
+    window.onload = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const resultParam = urlParams.get('result');
+
+      if (resultParam && results[resultParam]) {
+        currentResultData = results[resultParam];
+        document.getElementById('start-view').style.display = 'none';
+        showResultView();
+      }
+    };
 
     function startTest() {
       document.getElementById('start-view').style.display = 'none';
@@ -780,9 +801,6 @@
     }
 
     function showResult() {
-      document.getElementById('quiz-view').style.display = 'none';
-      document.getElementById('result-view').style.display = 'block';
-
       let selectedCharKey = 'chiikawa';
       let maxScore = -1;
 
@@ -794,13 +812,20 @@
       }
 
       currentResultData = results[selectedCharKey] || results.chiikawa;
+      showResultView();
+    }
+
+    function showResultView() {
+      document.getElementById('start-view').style.display = 'none';
+      document.getElementById('quiz-view').style.display = 'none';
+      document.getElementById('result-view').style.display = 'block';
 
       document.getElementById('res-img').src = currentResultData.img;
       document.getElementById('res-sub').innerText = currentResultData.title;
       document.getElementById('res-name').innerText = currentResultData.name;
       document.getElementById('res-quote').innerText = currentResultData.quote;
       
-      // 서머리 마크다운 파싱 및 박스 바인딩
+      // 서머리 마크다운 파싱
       const summaryBox = document.getElementById('res-summary');
       summaryBox.innerHTML = '';
       const lines = currentResultData.summary.split('\n');
@@ -817,7 +842,6 @@
       // 스탯 박스 동적 생성
       const statContainer = document.getElementById('res-stats-container');
       statContainer.innerHTML = '';
-
       const stats = currentResultData.stats || [];
 
       stats.forEach((st, idx) => {
@@ -835,7 +859,7 @@
         statContainer.appendChild(item);
       });
 
-      // 게이지 채우기 애니메이션 효과
+      // 게이지 애니메이션
       setTimeout(() => {
         stats.forEach((st, idx) => {
           const bar = document.getElementById(`stat-bar-${idx}`);
@@ -858,6 +882,13 @@
       });
     }
 
+    // 결과 전용 URL 생성 함수
+    function getResultUrl() {
+      const baseUrl = window.location.origin + window.location.pathname;
+      const charId = currentResultData ? currentResultData.id : 'chiikawa';
+      return `${baseUrl}?result=${charId}`;
+    }
+
     function shareKakao() {
       if (!window.Kakao) {
         alert('카카오 SDK를 불러오지 못했습니다.');
@@ -865,45 +896,50 @@
       }
     
       const data = currentResultData || results.chiikawa;
-      const siteUrl = window.location.href;
+      const resultUrl = getResultUrl();
       const absoluteImageUrl = new URL(data.img, window.location.href).href;
     
       Kakao.Share.sendDefault({
         objectType: 'feed',
         content: {
           title: `나와 닮은 먼작귀 캐릭터는 ${data.name}!`,
+          description: `내 유형 결과를 확인하고 너의 먼작귀 캐릭터도 찾아봐!`,
           imageUrl: absoluteImageUrl,
           imageWidth: 400,
           imageHeight: 400,
-          link: { mobileWebUrl: siteUrl, webUrl: siteUrl }
+          link: { mobileWebUrl: resultUrl, webUrl: resultUrl }
         },
         buttons: [
-          { title: '나도 테스트해보기', link: { mobileWebUrl: siteUrl, webUrl: siteUrl } }
+          { title: '결과 확인하기', link: { mobileWebUrl: resultUrl, webUrl: resultUrl } }
         ]
       });
     }
 
     function shareTwitter() {
-      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent('나와 닮은 먼작귀 캐릭터 찾기')}&url=${encodeURIComponent(window.location.href)}`, '_blank');
+      const resultUrl = getResultUrl();
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`나와 닮은 먼작귀 캐릭터는 ${currentResultData.name}!`)}&url=${encodeURIComponent(resultUrl)}`, '_blank');
     }
 
     function shareFacebook() {
-      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(getResultUrl())}`, '_blank');
     }
 
     function shareNaver() {
-      window.open(`https://share.naver.com/web/shareView?url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent('나와 꼭 닮은 먼작귀 캐릭터 찾기 테스트!')}`, '_blank');
+      window.open(`https://share.naver.com/web/shareView?url=${encodeURIComponent(getResultUrl())}&title=${encodeURIComponent(`나와 닮은 먼작귀 캐릭터는 ${currentResultData.name}!`)}`, '_blank');
     }
 
     function copyLink() {
-      navigator.clipboard.writeText(window.location.href).then(() => {
-        alert('링크 복사 완료!');
+      const resultUrl = getResultUrl();
+      navigator.clipboard.writeText(resultUrl).then(() => {
+        alert('결과 페이지 링크 복사 완료!');
       }).catch(() => {
         alert('복사 실패! 주소창에서 직접 복사해 주세요.');
       });
     }
 
     function restartTest() {
+      // URL의 ?result=... 파라미터 제거 후 첫 화면으로
+      window.history.pushState({}, "", window.location.pathname);
       currentQ = 0;
       for (let key in charScores) {
         charScores[key] = 0;

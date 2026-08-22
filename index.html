@@ -20,8 +20,10 @@
     body {
       background-color: #e3f2fd;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      gap: 16px;
       min-height: 100vh;
       min-height: 100dvh;
       padding: 20px 16px;
@@ -542,6 +544,14 @@
       </div>
     </div>
   </div>
+
+  <!-- 메인 페이지 배너: 시작 화면에서만 노출 -->
+  <div class="ad-banner" id="ad-banner-main">
+    <ins class="kakao_ad_area" style="display:none;"
+      data-ad-unit="DAN-08xx5drGzmEMd8Wz"
+      data-ad-width="320"
+      data-ad-height="100"></ins>
+  </div>
   <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
 
   <script>
@@ -799,12 +809,14 @@
       if (resultParam && results[resultParam]) {
         currentResultData = results[resultParam];
         document.getElementById('start-view').style.display = 'none';
+        document.getElementById('ad-banner-main').style.display = 'none';
         showResultView();
       }
     };
 
     function startTest() {
       document.getElementById('start-view').style.display = 'none';
+      document.getElementById('ad-banner-main').style.display = 'none';
       document.getElementById('quiz-view').style.display = 'block';
       renderQuestion();
     }
@@ -1003,6 +1015,7 @@
       answerOrder = [];
       document.getElementById('result-view').style.display = 'none';
       document.getElementById('start-view').style.display = 'block';
+      document.getElementById('ad-banner-main').style.display = 'flex';
     }
   </script>
 </body>

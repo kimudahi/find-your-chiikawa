@@ -11,25 +11,22 @@
       background-color: #f7f9fa;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       min-height: 100vh;
-      padding: 20px 10px;
+      padding: 20px;
     }
-    
-    /* 광고 레이아웃 - 심사 승인 전 빈 상자일 때도 영역(90px)을 확실히 유지 */
+
+    /* 심사자 인식용 광고 영역 (기존 디자인을 해치지 않도록 스펙 확보) */
     .ad-container {
       width: 100%;
       max-width: 480px;
       min-height: 90px;
       margin: 12px 0;
-      background-color: #ffffff;
-      border: 1px dashed #cbd5e1;
-      border-radius: 12px;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
+      text-align: center;
     }
 
     .card {
@@ -106,23 +103,20 @@
 
   <!-- [상단 광고 영역] -->
   <div class="ad-container" id="ad-top">
-    <!-- 발급받은 광고 스크립트를 이 자리에 넣으세요 -->
-    <span style="font-size: 12px; color: #94a3b8;">광고 영역 (Top Ad)</span>
+    <!-- 광고 발급 스크립트 삽입 위치 -->
   </div>
 
-  <!-- 메인 테스트 영역 -->
+  <!-- 테스트 메인 카드 -->
   <div class="card" id="app">
     <!-- Dynamic Rendering -->
   </div>
 
   <!-- [하단 광고 영역] -->
   <div class="ad-container" id="ad-bottom">
-    <!-- 발급받은 광고 스크립트를 이 자리에 넣으세요 -->
-    <span style="font-size: 12px; color: #94a3b8;">광고 영역 (Bottom Ad)</span>
+    <!-- 광고 발급 스크립트 삽입 위치 -->
   </div>
 
 <script>
-// 1. 캐릭터 기본 데이터 (9명)
 const characters = {
   chiikawa: { name: "치이카와", desc: "겁이 많고 눈물도 많지만, 중요한 순간에는 끝까지 포기하지 않는 용기를 가진 타입입니다." },
   hachiware: { name: "하치와레", desc: "긍정적인 마인드로 주변을 밝게 만들고, 기쁨과 맛있는 것을 함께 나누길 좋아하는 다정한 타입입니다." },
@@ -135,7 +129,6 @@ const characters = {
   ode: { name: "오데", desc: "커다란 울타리처럼 다 함께 어울리는 환경을 만들고, 기꺼이 든든한 버팀목이 되어주는 타입입니다." }
 };
 
-// 2. 9개 공평 문항
 const questions = [
   {
     targetChar: "chiikawa",
@@ -229,7 +222,6 @@ const questions = [
   }
 ];
 
-// 3. 상태 변수
 let currentQ = 0;
 let charScores = {
   chiikawa: 0, hachiware: 0, usagi: 0, momonga: 0,
@@ -237,7 +229,6 @@ let charScores = {
 };
 let userAnswers = [];
 
-// 4. 질문 화면 렌더링
 function renderQuestion() {
   const app = document.getElementById("app");
   const qData = questions[currentQ];
@@ -255,7 +246,6 @@ function renderQuestion() {
   `;
 }
 
-// 5. 답변 선택 및 점수 합산
 function handleSelect(selectedChar) {
   const currentQuestionData = questions[currentQ];
 
@@ -271,7 +261,6 @@ function handleSelect(selectedChar) {
   }
 }
 
-// 6. 결과 산출 및 타이브레이커
 function showResult() {
   let maxScore = -1;
 
@@ -312,7 +301,6 @@ function showResult() {
   renderResult(finalChar);
 }
 
-// 7. 결과 화면 렌더링
 function renderResult(charKey) {
   const app = document.getElementById("app");
   const resultData = characters[charKey];
@@ -327,7 +315,6 @@ function renderResult(charKey) {
   `;
 }
 
-// 8. 테스트 초기화
 function restartTest() {
   currentQ = 0;
   userAnswers = [];
@@ -337,7 +324,6 @@ function restartTest() {
   renderQuestion();
 }
 
-// 최초 실행
 renderQuestion();
 </script>
 </body>

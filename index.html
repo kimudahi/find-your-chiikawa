@@ -1,330 +1,953 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>치이카와 캐릭터 성향 테스트</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>먼작귀 심리 테스트</title>
+  <link rel="icon" type="image/x-icon" href="./favicon.ico">
+  
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.8.1/kakao.min.js" integrity="sha384-OL+ylM/iuPLtW5U3XcvLSGhE8JzReKDank5InqlHGWPhb4140/yrBw0bg0y7+C9J" crossorigin="anonymous"></script>
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: #f7f9fa;
+      background-color: #e3f2fd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 20px 16px;
+    }
+
+    .container {
+      background: #ffffff;
+      width: 100%;
+      max-width: 420px;
+      border-radius: 28px;
+      padding: 32px 24px;
+      box-shadow: 0 12px 32px rgba(2, 119, 189, 0.08);
+      text-align: center;
+      position: relative;
+    }
+
+    .start-card { display: block; }
+    
+    .cover-img-box {
+      width: 220px;
+      height: 220px;
+      margin: 16px auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      outline: none;
+    }
+
+    .cover-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: none;
+      border: none;
+      outline: none;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      background-color: #e1f5fe;
+      color: #0277bd;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .cover-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #1a1a1a;
+      line-height: 1.35;
+      margin-bottom: 12px;
+      word-break: keep-all;
+    }
+
+    .cover-desc {
+      font-size: 14px;
+      color: #666666;
+      line-height: 1.5;
+      margin-bottom: 24px;
+      word-break: keep-all;
+    }
+
+    .quiz-card { display: none; }
+
+    .progress-container {
+      width: 100%;
+      background-color: #e1f5fe;
+      border-radius: 10px;
+      height: 8px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background-color: #039be5;
+      border-radius: 10px;
+      transition: width 0.3s ease;
+    }
+
+    .q-number {
+      font-size: 13px;
+      color: #0277bd;
+      font-weight: 800;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .q-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+      line-height: 1.4;
+      word-break: keep-all;
+    }
+
+    .btn-option {
+      width: 100%;
+      background-color: #f8f9fa;
+      border: 1.5px solid #e9ecef;
+      border-radius: 16px;
+      padding: 14px 14px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #333333;
+      margin-bottom: 9px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      line-height: 1.35;
+      word-break: keep-all;
+      text-align: left;
+    }
+
+    .btn-option:active, .btn-option:hover {
+      background-color: #e1f5fe;
+      border-color: #b3e5fc;
+      color: #0277bd;
+    }
+
+    .result-card { display: none; }
+
+    .char-img-box {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .char-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 16px rgba(2, 119, 189, 0.15));
+    }
+
+    .sub-title { font-size: 14px; color: #8e8e93; font-weight: 700; margin-bottom: 4px; }
+    .main-title { font-size: 26px; color: #1a1a1a; font-weight: 800; margin-bottom: 12px; }
+
+    .tag-container {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .tag {
+      background-color: #e1f5fe;
+      color: #0277bd;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 14px;
+    }
+
+    .quote-box {
+      background-color: #f0f9ff !important;
+      border: 2px solid #0288d1 !important;
+      border-radius: 18px !important;
+      padding: 16px 20px !important;
+      font-size: 15px !important;
+      font-weight: 700 !important;
+      color: #01579b !important;
+      margin-bottom: 18px !important;
+      text-align: center !important;
+      word-break: keep-all !important;
+      box-shadow: 0 4px 12px rgba(2, 136, 209, 0.08) !important;
+    }
+
+    /* 서머리 박스 영역 */
+    .summary-box {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 18px 16px;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+
+    .summary-line {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #334155;
+      word-break: keep-all;
+      margin-bottom: 10px;
+      position: relative;
+      padding-left: 14px;
+    }
+
+    .summary-line:last-child { margin-bottom: 0; }
+
+    .summary-line::before {
+      content: "•";
+      position: absolute;
+      left: 2px;
+      top: 0;
+      color: #0288d1;
+      font-weight: bold;
+    }
+
+    .summary-line strong {
+      color: #0277bd;
+      font-weight: 800;
+    }
+
+    /* 스탯 바 섹션 */
+    .stat-section {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 16px 18px;
+      margin-bottom: 22px;
+      text-align: left;
+    }
+
+    .stat-item { margin-bottom: 12px; }
+    .stat-item:last-child { margin-bottom: 0; }
+
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+
+    .stat-bar-bg {
+      width: 100%;
+      height: 8px;
+      background-color: #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .stat-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #0288d1);
+      border-radius: 10px;
+      width: 0%;
+      transition: width 0.6s ease-in-out;
+    }
+
+    .info-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .info-item {
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 16px;
+      padding: 14px 10px;
+      text-align: center;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      padding: 20px;
     }
 
-    /* 심사자 인식용 광고 영역 (기존 디자인을 해치지 않도록 스펙 확보) */
-    .ad-container {
-      width: 100%;
-      max-width: 480px;
-      min-height: 90px;
-      margin: 12px 0;
+    .info-label {
+      font-size: 12px;
+      font-weight: 800;
+      color: #0277bd;
+      margin-bottom: 4px;
       display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .info-value {
+      font-size: 13.5px;
+      color: #1f2937;
+      font-weight: 700;
+      word-break: keep-all;
+    }
+
+    .chemistry-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .chem-item {
+      border-radius: 16px;
+      padding: 14px 10px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
     }
 
-    .card {
-      background: #ffffff;
-      width: 100%;
-      max-width: 480px;
-      padding: 24px;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    .chem-item.best { background-color: #f0fdf4; border: 1px solid #bbf7d0; }
+    .chem-item.tikitaka { background-color: #fff1f2; border: 1px solid #fecdd3; }
+
+    .chem-label {
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
-    .progress {
-      font-size: 14px;
-      font-weight: 600;
-      color: #888;
-      margin-bottom: 8px;
-    }
-    .question {
-      font-size: 18px;
+
+    .chem-item.best .chem-label { color: #166534; }
+    .chem-item.tikitaka .chem-label { color: #9f1239; }
+
+    .chem-value {
+      font-size: 13.5px;
       font-weight: 700;
-      color: #222;
-      margin-bottom: 20px;
+      color: #1f2937;
       word-break: keep-all;
-      line-height: 1.4;
     }
-    .options {
+
+    .share-section {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
-    .btn-option {
-      background: #ffffff;
-      border: 1.5px solid #e2e8f0;
-      padding: 14px 16px;
-      border-radius: 10px;
-      text-align: left;
-      font-size: 14px;
-      color: #333;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      word-break: keep-all;
-    }
-    .btn-option:hover {
-      background: #f0f7ff;
-      border-color: #3b82f6;
-    }
-    .result-box {
-      text-align: center;
-    }
-    .result-title {
-      font-size: 22px;
+
+    .btn-main-share {
+      width: 100%;
+      padding: 15px;
+      border-radius: 16px;
+      font-size: 14.5px;
       font-weight: 800;
-      color: #111;
-      margin-bottom: 12px;
-    }
-    .result-desc {
-      font-size: 15px;
-      color: #555;
-      line-height: 1.6;
-      margin-bottom: 24px;
-    }
-    .btn-restart {
-      background: #3b82f6;
-      color: white;
       border: none;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: 600;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.1s ease;
+    }
+    .btn-main-share:active { transform: scale(0.98); }
+    
+    .btn-kakao-primary { background-color: #FEE500; color: #191919; }
+    .btn-link-primary { background-color: #039be5; color: #ffffff; }
+
+    .btn-restart {
+      width: 100%;
+      padding: 15px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 700;
+      background-color: #e1f5fe;
+      color: #0277bd;
+      border: none;
+      cursor: pointer;
+    }
+
+    .sub-sns-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .btn-sub-sns {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.1s ease;
+    }
+    .btn-sub-sns:active { transform: scale(0.92); }
+    .btn-sub-sns svg { width: 20px; height: 20px; fill: currentColor; }
+
+    .btn-sub-sns.twitter { background-color: #000000; color: #ffffff; }
+    .btn-sub-sns.facebook { background-color: #1877f2; color: #ffffff; }
+    .btn-sub-sns.naver { background-color: #03cf5d; color: #ffffff; }
+
+    @media (max-width: 380px) {
+      .container { padding: 24px 16px; }
+      .cover-title { font-size: 21px; }
+      .cover-img-box { width: 180px; height: 180px; }
+      .q-text { font-size: 16px; }
+      .main-title { font-size: 22px; }
+      .btn-option { padding: 12px; font-size: 13px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- [상단 광고 영역] -->
-  <div class="ad-container" id="ad-top">
-    <!-- 광고 발급 스크립트 삽입 위치 -->
+  <div class="container">
+    <div id="start-view" class="start-card">
+      <span class="cover-badge">먼작귀 심리 테스트</span>
+      <h1 class="cover-title">나와 닮은 먼작귀 캐릭터 찾기</h1>
+      <div class="cover-img-box">
+        <img src="./main.gif" alt="먼작귀 커버">
+      </div>
+      <p class="cover-desc">먼가 작고 귀여운 녀석들 중에서<br>나와 닮은 캐릭터를 확인해 보세요!</p>
+      <button class="btn-main-share btn-link-primary" onclick="startTest()">시작해 보자구!</button>
+    </div>
+
+    <div id="quiz-view" class="quiz-card">
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <div class="q-number" id="q-number">Q1</div>
+      <div class="q-text" id="q-text">질문 텍스트</div>
+      <div id="answer-buttons"></div>
+    </div>
+
+    <div id="result-view" class="result-card">
+      <div class="char-img-box">
+        <img id="res-img" src="" alt="캐릭터 이미지">
+      </div>
+      <p class="sub-title" id="res-sub"></p>
+      <h1 class="main-title" id="res-name"></h1>
+      <div class="tag-container" id="res-tags"></div>
+      <div class="quote-box" id="res-quote"></div>
+
+      <!-- 서머리 박스 영역 -->
+      <div class="summary-box" id="res-summary"></div>
+
+      <!-- 캐릭터 맞춤 스탯 영역 (JS에서 동적 생성) -->
+      <div class="stat-section" id="res-stats-container"></div>
+
+      <div class="info-section">
+        <div class="info-item">
+          <span class="info-label">🍀 행운의 아이템</span>
+          <p class="info-value" id="res-item"></p>
+        </div>
+        <div class="info-item">
+          <span class="info-label">🍮 힐링 푸드</span>
+          <p class="info-value" id="res-food"></p>
+        </div>
+      </div>
+
+      <div class="chemistry-section">
+        <div class="chem-item best">
+          <span class="chem-label">💖 베스트 프렌드</span>
+          <p class="chem-value" id="res-best"></p>
+        </div>
+        <div class="chem-item tikitaka">
+          <span class="chem-label">⚡ 환장의 티키타카</span>
+          <p class="chem-value" id="res-tiki"></p>
+        </div>
+      </div>
+
+      <div class="share-section">
+        <button class="btn-main-share btn-kakao-primary" onclick="shareKakao()">
+          친구에게 공유하기
+        </button>
+        <button class="btn-main-share btn-link-primary" onclick="copyLink()">
+          결과 링크 복사
+        </button>
+        <button class="btn-restart" onclick="restartTest()">나도 테스트하기</button>
+
+        <div class="sub-sns-group">
+          <button class="btn-sub-sns twitter" onclick="shareTwitter()" title="X(트위터) 공유">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </button>
+          <button class="btn-sub-sns facebook" onclick="shareFacebook()" title="페이스북 공유">
+            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </button>
+          <button class="btn-sub-sns naver" onclick="shareNaver()" title="네이버 공유">
+            <svg viewBox="0 0 24 24"><path d="M16.273 12.845L7.376 0H0v24h7.726v-12.845L16.624 24H24V0h-7.727z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- 테스트 메인 카드 -->
-  <div class="card" id="app">
-    <!-- Dynamic Rendering -->
-  </div>
+  <script>
+    const JAVASCRIPT_KEY = '45851354763e4eb82596527c8f662c33';
 
-  <!-- [하단 광고 영역] -->
-  <div class="ad-container" id="ad-bottom">
-    <!-- 광고 발급 스크립트 삽입 위치 -->
-  </div>
-
-<script>
-const characters = {
-  chiikawa: { name: "치이카와", desc: "겁이 많고 눈물도 많지만, 중요한 순간에는 끝까지 포기하지 않는 용기를 가진 타입입니다." },
-  hachiware: { name: "하치와레", desc: "긍정적인 마인드로 주변을 밝게 만들고, 기쁨과 맛있는 것을 함께 나누길 좋아하는 다정한 타입입니다." },
-  usagi: { name: "우사기", desc: "남들의 시선은 신경 쓰지 않는 독보적인 마이웨이! 자유롭고 압도적인 텐션을 자랑하는 타입입니다." },
-  momonga: { name: "모몽가", desc: "언제나 내가 주인공! 귀여움과 칭찬을 독차지하고 싶어 하는 당당한 어리광쟁이 타입입니다." },
-  kurimanju: { name: "쿠리만쥬", desc: "하루의 끝을 깔끔한 여유와 맛있는 음식으로 마무리하는, 덤덤하고 어른스러운 타입입니다." },
-  rakko: { name: "랏코", desc: "스스로에게 엄격하며 실력을 키워 남들에게 동경을 받는 미식가이자 베테랑 타입입니다." },
-  shisa: { name: "시사", desc: "성실하고 예의 바르며, 자격증 공부나 목표 달성을 위해 꾸준히 노력하는 모범생 타입입니다." },
-  kani: { name: "카니", desc: "조용히 주변을 살피며, 애정하는 사람에게 다정하게 마음을 쏟아주는 조력자 타입입니다." },
-  ode: { name: "오데", desc: "커다란 울타리처럼 다 함께 어울리는 환경을 만들고, 기꺼이 든든한 버팀목이 되어주는 타입입니다." }
-};
-
-const questions = [
-  {
-    targetChar: "chiikawa",
-    q: "Q1. 정말 막막하고 두려운 상황이 눈앞에 찾아왔을 때 나는?",
-    a: [
-      { text: "겁이 나서 눈물이 나지만 끝까지 용기를 내서 부딪힌다.", char: "chiikawa" },
-      { text: "어떻게든 될 거라며 웃으며 상황을 이겨낸다.", char: "hachiware" },
-      { text: "알 수 없는 함성을 지르며 무작정 돌진한다.", char: "usagi" },
-      { text: "상황을 회피하거나 누군가의 뒤로 쏙 숨는다.", char: "momonga" }
-    ]
-  },
-  {
-    targetChar: "hachiware",
-    q: "Q2. 맛있는 음식이나 기분 좋은 소식을 접했을 때 나의 반응은?",
-    a: [
-      { text: "가장 먼저 소중한 사람들에게 나누며 함께 기뻐한다.", char: "hachiware" },
-      { text: "혼자만의 공간에서 조용히 음미하며 힐링한다.", char: "kurimanju" },
-      { text: "성취감을 느끼며 스스로에게 상을 준다.", char: "rakko" },
-      { text: "주변 친구들에게 자랑하며 칭찬을 요구한다.", char: "momonga" }
-    ]
-  },
-  {
-    targetChar: "usagi",
-    q: "Q3. 특별한 계획이 없는 주말, 나만의 행동 스타일은?",
-    a: [
-      { text: "발길 닿는 대로, 내키는 대로 자유롭게 밖을 돌아다닌다.", char: "usagi" },
-      { text: "집에서 폭신한 이불을 덮고 느긋하게 휴식을 취한다.", char: "chiikawa" },
-      { text: "미뤄뒀던 공부나 자기계발 계획을 세운다.", char: "shisa" },
-      { text: "좋아하는 사람의 일상에 맞춰 소소하게 도와준다.", char: "kani" }
-    ]
-  },
-  {
-    targetChar: "momonga",
-    q: "Q4. 여러 사람과 함께 모여 있을 때 내가 바라는 내 모습은?",
-    a: [
-      { text: "모두의 관심과 귀여움을 독차지하는 귀염둥이!", char: "momonga" },
-      { text: "다 함께 웃고 떠들 수 있도록 분위기를 이끄는 리더.", char: "hachiware" },
-      { text: "조용히 구석에서 상황을 관찰하며 챙겨주는 존재.", char: "kani" },
-      { text: "모두를 포용하고 지켜주는 든든한 버팀목.", char: "ode" }
-    ]
-  },
-  {
-    targetChar: "kurimanju",
-    q: "Q5. 힘든 하루 일을 모두 마치고 집으로 돌아왔을 때 가장 필요한 것은?",
-    a: [
-      { text: "시원한 음료와 안주를 곁들인 혼자만의 느긋한 시간.", char: "kurimanju" },
-      { text: "따뜻한 욕조에 들어가 마음을 정돈하는 조용한 시간.", char: "shisa" },
-      { text: "친구들과 전화로 수다 떨며 스트레스를 푸는 시간.", char: "hachiware" },
-      { text: "아무 생각 없이 제일 맛있는 음식을 잔뜩 먹는 것.", char: "usagi" }
-    ]
-  },
-  {
-    targetChar: "rakko",
-    q: "Q6. 내가 생각하는 가장 멋진 인간상이란?",
-    a: [
-      { text: "꾸준히 실력을 쌓아 남들에게 인정받는 완벽한 전문가.", char: "rakko" },
-      { text: "어떤 시련이 와도 다시 일어서는 마음이 강한 사람.", char: "chiikawa" },
-      { text: "남들을 위해 기꺼이 희생할 줄 아는 배려심 깊은 사람.", char: "ode" },
-      { text: "구속받지 않고 내 방식대로 당당하게 사는 사람.", char: "usagi" }
-    ]
-  },
-  {
-    targetChar: "shisa",
-    q: "Q7. 새로운 도전이나 공부를 시작할 때 나의 마음가짐은?",
-    a: [
-      { text: "자격증이나 확실한 성과를 낼 때까지 성실하게 노력한다.", char: "shisa" },
-      { text: "즐겁고 유익한 경험이 되는 것에 의의를 둔다.", char: "hachiware" },
-      { text: "목표를 높게 잡고 멋진 결과를 이뤄내 스승처럼 성장한다.", char: "rakko" },
-      { text: "굳이 스트레스받지 않고 할 수 있는 만큼만 편하게 한다.", char: "kurimanju" }
-    ]
-  },
-  {
-    targetChar: "kani",
-    q: "Q8. 내가 좋아하는 사람에게 마음을 전하는 가장 좋은 방법은?",
-    a: [
-      { text: "상대방이 필요한 것을 세심하게 챙겨주고 다정하게 대해준다.", char: "kani" },
-      { text: "함께 맛있는 것을 먹으러 가자고 먼저 손을 내민다.", char: "hachiware" },
-      { text: "귀엽게 어리광을 부리며 애정을 요구한다.", char: "momonga" },
-      { text: "묵묵히 옆을 지켜주며 상대방의 편이 되어준다.", char: "ode" }
-    ]
-  },
-  {
-    targetChar: "ode",
-    q: "Q9. 누군가 억울한 일을 당하거나 도움이 필요한 순간을 목격했다면?",
-    a: [
-      { text: "내 일처럼 앞장서서 상대를 두텁게 보호하고 지켜준다.", char: "ode" },
-      { text: "침착하게 상황을 분석하고 바른 해결책을 찾아준다.", char: "shisa" },
-      { text: "안절부절못하며 같이 슬퍼하고 응원해 준다.", char: "chiikawa" },
-      { text: "내가 가진 팁이나 소중한 무언가를 내어준다.", char: "hachiware" }
-    ]
-  }
-];
-
-let currentQ = 0;
-let charScores = {
-  chiikawa: 0, hachiware: 0, usagi: 0, momonga: 0,
-  kurimanju: 0, rakko: 0, shisa: 0, kani: 0, ode: 0
-};
-let userAnswers = [];
-
-function renderQuestion() {
-  const app = document.getElementById("app");
-  const qData = questions[currentQ];
-
-  let optionsHtml = qData.a.map((opt) => `
-    <button class="btn-option" onclick="handleSelect('${opt.char}')">
-      ${opt.text}
-    </button>
-  `).join('');
-
-  app.innerHTML = `
-    <div class="progress">질문 ${currentQ + 1} / ${questions.length}</div>
-    <div class="question">${qData.q}</div>
-    <div class="options">${optionsHtml}</div>
-  `;
-}
-
-function handleSelect(selectedChar) {
-  const currentQuestionData = questions[currentQ];
-
-  const addedScore = (selectedChar === currentQuestionData.targetChar) ? 2 : 1;
-  charScores[selectedChar] += addedScore;
-  userAnswers[currentQ] = selectedChar;
-
-  currentQ++;
-  if (currentQ < questions.length) {
-    renderQuestion();
-  } else {
-    showResult();
-  }
-}
-
-function showResult() {
-  let maxScore = -1;
-
-  for (let charKey in charScores) {
-    if (charScores[charKey] > maxScore) {
-      maxScore = charScores[charKey];
+    if (window.Kakao && !Kakao.isInitialized()) {
+      Kakao.init(JAVASCRIPT_KEY);
     }
-  }
 
-  const topChars = Object.keys(charScores).filter(
-    charKey => charScores[charKey] === maxScore
-  );
+    const questions = [
+      {
+        q: "기다리던 주말, 나만의 힐링 방법은?",
+        a: [
+          { text: "아늑한 방에서 혼자 조용히 휴식을 취해요", char: "chiikawa" },
+          { text: "친구들과 함께 웃고 떠들며 추억을 만들어요", char: "hachiware" },
+          { text: "특별한 계획이 없어도 일단 밖으로 나가요", char: "usagi" },
+          { text: "맛있는 음식을 잔뜩 먹으며 느긋하게 즐겨요", char: "kurimanju" }
+        ]
+      },
+      {
+        q: "두렵고 막막한 일이 생겼을 때 나의 행동은?",
+        a: [
+          { text: "겁은 나지만 소중한 사람들을 생각하며 용기를 내요", char: "chiikawa" },
+          { text: "“어떻게든 될 거야!” 라며 긍정적인 마인드로 이겨내요", char: "hachiware" },
+          { text: "무섭고 힘들지만, 일단 배운대로 최선을 다해요", char: "shisa" },
+          { text: "냉정함을 유지하고 문제의 원인을 깔끔하게 해결해요", char: "rakko" }
+        ]
+      },
+      {
+        q: "여러 친구들과 함께 있을 때 나의 모습은?",
+        a: [
+          { text: "대화를 주도하고 친구들을 다정하게 챙겨요", char: "hachiware" },
+          { text: "나만의 존재감과 매력을 당당하게 어필해요", char: "momonga" },
+          { text: "이야기를 차분하게 듣고 실질적인 도움을 줘요", char: "kani" },
+          { text: "말수는 적지만 뒤에서 든든하게 지켜줘요", char: "ode" }
+        ]
+      },
+      {
+        q: "인생에서 가장 큰 보람을 느끼는 순간은?",
+        a: [
+          { text: "주변 사람들의 관심과 칭찬을 받을 때", char: "momonga" },
+          { text: "나의 정보나 조언이 타인에게 도움이 될 때", char: "kani" },
+          { text: "시련을 극복하고 스스로 성장했다고 느낄 때", char: "rakko" },
+          { text: "열심히 일한 만큼 성과를 인정받았을 때", char: "shisa" }
+        ]
+      },
+      {
+        q: "누군가 나에게 진심 어린 칭찬을 건넨다면?",
+        a: [
+          { text: "부끄러워서 얼굴이 빨개지지만 속으로는 기뻐해요", char: "chiikawa" },
+          { text: "“더 칭찬해 봐!”라며 당당하게 요구해요", char: "momonga" },
+          { text: "예의 바르게 감사하다는 말을 전해요", char: "shisa" },
+          { text: "덤덤하고 태연한 얼굴로 고마움을 표해요", char: "ode" }
+        ]
+      },
+      {
+        q: "스트레스가 쌓였을 때 해소하는 방법은?",
+        a: [
+          { text: "맛있는 술과 안주로 피로를 털어버려요", char: "kurimanju" },
+          { text: "신나는 춤과 노래로 에너지를 발산해요", char: "usagi" },
+          { text: "달콤한 디저트를 먹으며 기분을 전환시켜요", char: "rakko" },
+          { text: "조용한 곳에서 책을 읽으며 생각을 정리해요", char: "kani" }
+        ]
+      },
+      {
+        q: "낯선 사람들로 가득한 파티에서 나의 모습은?",
+        a: [
+          { text: "먼저 다가가서 친근하게 인사를 건네요", char: "hachiware" },
+          { text: "남들의 시선은 신경쓰지 않고 자유롭게 행동해요", char: "usagi" },
+          { text: "구석에서 분위기를 살피며 서서히 적응해요", char: "chiikawa" },
+          { text: "나서지 않고 제자리에 가만히 앉아 있어요", char: "ode" }
+        ]
+      },
+      {
+        q: "새로운 취미 활동을 시작해야 한다면?",
+        a: [
+          { text: "자격증까지 딸 수 있는 실용적인 취미를 가져요", char: "shisa" },
+          { text: "근사한 요리나 음료를 만드는 법을 배워요", char: "kurimanju" },
+          { text: "혼자서도 즐길 수 있는 정적인 활동을 해요", char: "kani" },
+          { text: "체력을 키우고 자신감을 얻을 수 있는 운동을 배워요", char: "rakko" }
+        ]
+      },
+      {
+        q: "좋아하는 사람에게 마음을 전하는 방법은?",
+        a: [
+          { text: "소소한 선물이나 편지를 수줍게 건네요", char: "chiikawa" },
+          { text: "상대가 필요로 할 때 곁에서 든든하게 도움을 줘요", char: "ode" },
+          { text: "취향을 기억해 뒀다가 은근슬쩍 챙겨줘요", char: "kani" },
+          { text: "애교와 돌직구로 상대의 시선을 사로잡아요", char: "momonga" }
+        ]
+      },
+      {
+        q: "나의 가장 큰 매력 포인트는?",
+        a: [
+          { text: "무심한 듯 은근히 챙겨주는 다정함", char: "kurimanju" },
+          { text: "뛰어난 순발력과 넘치는 에너지", char: "usagi" },
+          { text: "목표 달성을 위해 끝까지 노력하는 열정", char: "shisa" },
+          { text: "완벽함 속에 숨겨진 귀여움", char: "rakko" }
+        ]
+      }
+    ];
 
-  let finalChar = topChars[0];
+    const results = {
+      chiikawa: {
+        id: "chiikawa",
+        name: "치이카와", title: "무서워도 결국은 용기를 내는 주인공",
+        tags: ["#퓨어햄스터", "#귀여움", "#소심이"],
+        quote: "“와.. 와아...!”",
+        img: "./chiikawa.png",
+        summary: "**겁이 많고 소심하지만**, 친구들을 진심으로 아끼는 순수한 영혼이에요.\n위기 순간마다 눈물을 흘리면서도 **결국 용기를 내어** 맞서 싸워요.\n존재만으로도 타인의 마음을 무장해제시키는 **무해한 매력의 소유자**입니다.",
+        stats: [
+          { label: "🎀 귀여움", val: 100 },
+          { label: "🔥 용기", val: 50 },
+          { label: "⚔️ 전투력", val: 30 }
+        ],
+        item: "곰돌이 가방", food: "소고기 전골",
+        best: "하치와레", tikitaka: "모몽가"
+      },
+      hachiware: {
+        id: "hachiware",
+        name: "하치와레", title: "다정하고 긍정적인 분위기 메이커",
+        tags: ["#인싸고양이", "#다정다감", "#프로기록러"],
+        quote: "“어떻게든 돼라!”",
+        img: "./hachiware.png",
+        summary: "**어떤 위기 속에서도** 길을 찾아내는 놀라운 긍정 마인드를 가졌어요.\n주변의 기분을 세심하게 살피고, **소소한 일상을 기록하는** 낭만을 즐겨요.\n특유의 싹싹함과 센스로 난관을 해결하는 **든든한 해결사**입니다.",
+        stats: [
+          { label: "🤝 친화력", val: 100 },
+          { label: "🏠 생활력", val: 80 },
+          { label: "⚔️ 전투력", val: 50 }
+        ],
+        item: "카메라", food: "봉지 라면",
+        best: "치이카와", tikitaka: "모몽가"
+      },
+      usagi: {
+        id: "usagi",
+        name: "우사기", title: "거침없이 돌진하는 마이웨이의 소유자",
+        tags: ["#광기토끼", "#예측불허", "#숨은고수"],
+        quote: "“우라! 야하! 하아?”",
+        img: "./usagi.png",
+        summary: "말보다 괴성과 행동으로 상황을 제압하는 **기상천외한 자유로운 영혼**이에요.\n어디로 튈지 모르는 텐션 뒤에 **압도적인 생존 실력**이 숨어 있어요.\n거침없는 당당함과 돌발 행동으로 분위기를 반전시키는 **능력자**입니다.",
+        stats: [
+          { label: "🌀 텐션", val: 100 },
+          { label: "⚡ 순발력", val: 100 },
+          { label: "⚔️ 전투력", val: 90 }
+        ],
+        item: "지팡이", food: "대형 푸딩",
+        best: "치이카와", tikitaka: "모몽가"
+      },
+      momonga: {
+        id: "momonga",
+        name: "모몽가", title: "뻔뻔함도 실력! 귀여움으로 무장한 떼쟁이",
+        tags: ["#하늘다람쥐", "#폭신한꼬리", "#관종"],
+        quote: "“귀여워해라! 칭찬해라!”",
+        img: "./momonga.png",
+        summary: "폭신한 꼬리와 깜찍함으로 **세상의 귀여움을 독차지하고픈** 타입이에요.\n남들의 시선은 아랑곳하지 않고 **당당하게 관심과 칭찬을 요구**해요.\n미워할 수 없는 뻔뻔함과 매력으로 주변을 이리저리 휘두르는 **신스틸러**입니다.",
+        stats: [
+          { label: "👑 애교력", val: 100 },
+          { label: "📢 관종력", val: 100 },
+          { label: "🏠 생활력", val: 0 }
+        ],
+        item: "간식", food: "흰쌀밥",
+        best: "카니", tikitaka: "우사기"
+      },
+      kurimanju: {
+        id: "kurimanju",
+        name: "쿠리만쥬", title: "술 한 잔의 여유를 아는 낭만 미식가",
+        tags: ["#애주가수달", "#혼술", "#츤데레"],
+        quote: "“캬-!”",
+        img: "./kurimanju.png",
+        summary: "바쁜 일상 속에서도 **한 잔의 여유를 아는** 진정한 어른스러운 낭만파예요.\n겉으로는 무심해 보여도 남몰래 **슬쩍 다가와 챙겨주는 츤데레**예요.\n복잡한 생각은 털어내고 현재의 소소한 즐거움에 집중하는 **쿨한 매력**이 있어요.",
+        stats: [
+          { label: "🍺 알콜 지수", val: 100 },
+          { label: "😎 어른미", val: 100 },
+          { label: "💖 다정함", val: 80 }
+        ],
+        item: "음주 자격증", food: "밤만쥬",
+        best: "시사", tikitaka: "우사기"
+      },
+      rakko: {
+        id: "rakko",
+        name: "랏코", title: "카리스마 넘치는 든든한 랭킹 1위",
+        tags: ["#실력파해달", "#디저트매니아", "#반전매력"],
+        quote: "“강해지려면 브로콜리도 남기지 말고 먹어야해”",
+        img: "./rakko.png",
+        summary: "랭킹 1위에 빛나는 **세계관 최고 실력자이자 철저한 자기관리의 신**이에요.\n카리스마 넘치는 모습 뒤에 **달콤한 디저트에 눈을 반짝이는 반전**이 있어요.\n스스로에게 엄격하지만 후배들을 아낌없이 이끄는 **다정한 스승님**입니다.",
+        stats: [
+          { label: "🕶️ 리더십", val: 100 },
+          { label: "⚔️ 전투력", val: 100 },
+          { label: "🍰 당 충전", val: 90 }
+        ],
+        item: "무기", food: "딸기 파르페",
+        best: "하치와레", tikitaka: "모몽가"
+      },
+      shisa: {
+        id: "shisa",
+        name: "시사", title: "성실함과 예의를 갖춘 아르바이트생",
+        tags: ["#수호신", "#노력파", "#라멘집알바"],
+        quote: "“사부님!”",
+        img: "./shisa.png",
+        summary: "목표를 세우면 끝까지 끈기 있게 해내는 **성실함의 대명사**예요.\n밝은 미소와 싹싹한 예의로 **주변 사람들의 신뢰를 한몸에** 받아요.\n좋아하는 일에는 배움을 마다하지 않는 **열정 넘치는 모범생**입니다.",
+        stats: [
+          { label: "📚 성실함", val: 100 },
+          { label: "🍜 적응력", val: 100 },
+          { label: "🏠 생활력", val: 100 }
+        ],
+        item: "슈퍼 아르바이터 자격증", food: "특제 라멘",
+        best: "쿠리만쥬", tikitaka: "모몽가"
+      },
+      kani: {
+        id: "kani",
+        name: "카니", title: "조용하고 따뜻한 지성파",
+        tags: ["#헌책방주인", "#상냥함", "#수용력100%"],
+        quote: "“헤헷!”",
+        img: "./kani.png",
+        summary: "수줍음이 많지만 마음 깊은 곳에 **따뜻하고 세심한 배려**가 가득해요.\n어떤 앙탈과 투정도 다정하게 받아주는 **넓은 포용력의 대인배**예요.\n함께 있는 것만으로도 상대의 마음을 편안하게 만드는 **포근한 존재**입니다.",
+        stats: [
+          { label: "📖 지성", val: 100 },
+          { label: "🦀 포용력", val: 90 },
+          { label: "🤫 수줍음", val: 70 }
+        ],
+        item: "게 머리띠", food: "수제 만두",
+        best: "모몽가", tikitaka: "우사기"
+      },
+      ode: {
+        id: "ode",
+        name: "오데", title: "커다란 덩치에 숨겨진 의리와 외로움",
+        tags: ["#외눈박이거인", "#고블린경호원", "#든든함"],
+        quote: "“또 같이 놀자!”",
+        img: "./ode.png",
+        summary: "웅장한 외모와 달리 **묵직한 신뢰감과 따뜻함**을 가지고 있어요.\n위기 속에서 타인을 위해 선뜻 자신을 던지는 **남다른 의리파**예요.\n작은 다정함도 오래도록 가슴 깊이 기억하고 **보답하려는 진국**입니다.",
+        stats: [
+          { label: "🛡️ 의리", val: 100 },
+          { label: "💪 피지컬", val: 100 },
+          { label: "⚔️ 전투력", val: 100 }
+        ],
+        item: "감옥 열쇠", food: "감옥 빵과 스튜",
+        best: "쿠리만쥬", tikitaka: "고블린"
+      }
+    };
 
-  if (topChars.length > 1) {
-    let resolved = false;
+    let currentQ = 0;
+    let charScores = {
+      chiikawa: 0, hachiware: 0, usagi: 0,
+      momonga: 0, kurimanju: 0, rakko: 0,
+      shisa: 0, kani: 0, ode: 0
+    };
+    let currentResultData = null;
 
-    for (let charKey of topChars) {
-      const targetQuestionIdx = questions.findIndex(q => q.targetChar === charKey);
-      if (targetQuestionIdx !== -1 && userAnswers[targetQuestionIdx] === charKey) {
-        finalChar = charKey;
-        resolved = true;
-        break;
+    // 페이지 접속 시 URL 파라미터 체크 (?result=xxx 확인)
+    window.onload = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const resultParam = urlParams.get('result');
+
+      if (resultParam && results[resultParam]) {
+        currentResultData = results[resultParam];
+        document.getElementById('start-view').style.display = 'none';
+        showResultView();
+      }
+    };
+
+    function startTest() {
+      document.getElementById('start-view').style.display = 'none';
+      document.getElementById('quiz-view').style.display = 'block';
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = questions[currentQ];
+      document.getElementById('q-number').innerText = `Q${currentQ + 1}`;
+      document.getElementById('q-text').innerText = q.q;
+      document.getElementById('progress-bar').style.width = `${((currentQ + 1) / questions.length) * 100}%`;
+
+      const btnContainer = document.getElementById('answer-buttons');
+      btnContainer.innerHTML = '';
+
+      q.a.forEach((ans, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-option';
+        btn.innerText = `${idx + 1}. ${ans.text}`;
+        btn.onclick = () => selectAnswer(ans.char);
+        btnContainer.appendChild(btn);
+      });
+    }
+
+    function selectAnswer(targetChar) {
+      if (charScores[targetChar] !== undefined) {
+        charScores[targetChar] += 1;
+      }
+
+      currentQ++;
+      if (currentQ < questions.length) {
+        renderQuestion();
+      } else {
+        showResult();
       }
     }
 
-    if (!resolved) {
-      for (let i = 0; i < userAnswers.length; i++) {
-        if (topChars.includes(userAnswers[i])) {
-          finalChar = userAnswers[i];
-          break;
+    function showResult() {
+      let selectedCharKey = 'chiikawa';
+      let maxScore = -1;
+
+      for (let charKey in charScores) {
+        if (charScores[charKey] > maxScore) {
+          maxScore = charScores[charKey];
+          selectedCharKey = charKey;
         }
       }
+
+      currentResultData = results[selectedCharKey] || results.chiikawa;
+      showResultView();
     }
-  }
 
-  renderResult(finalChar);
-}
+    function showResultView() {
+      document.getElementById('start-view').style.display = 'none';
+      document.getElementById('quiz-view').style.display = 'none';
+      document.getElementById('result-view').style.display = 'block';
 
-function renderResult(charKey) {
-  const app = document.getElementById("app");
-  const resultData = characters[charKey];
+      document.getElementById('res-img').src = currentResultData.img;
+      document.getElementById('res-sub').innerText = currentResultData.title;
+      document.getElementById('res-name').innerText = currentResultData.name;
+      document.getElementById('res-quote').innerText = currentResultData.quote;
+      
+      // 서머리 마크다운 파싱
+      const summaryBox = document.getElementById('res-summary');
+      summaryBox.innerHTML = '';
+      const lines = currentResultData.summary.split('\n');
+      lines.forEach(line => {
+        if (line.trim() !== '') {
+          const formattedLine = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+          const p = document.createElement('p');
+          p.className = 'summary-line';
+          p.innerHTML = formattedLine;
+          summaryBox.appendChild(p);
+        }
+      });
 
-  app.innerHTML = `
-    <div class="result-box">
-      <div class="progress">당신의 치이카와 성향은?</div>
-      <div class="result-title">${resultData.name}</div>
-      <div class="result-desc">${resultData.desc}</div>
-      <button class="btn-restart" onclick="restartTest()">다시 테스트하기</button>
-    </div>
-  `;
-}
+      // 스탯 박스 동적 생성
+      const statContainer = document.getElementById('res-stats-container');
+      statContainer.innerHTML = '';
+      const stats = currentResultData.stats || [];
 
-function restartTest() {
-  currentQ = 0;
-  userAnswers = [];
-  for (let charKey in charScores) {
-    charScores[charKey] = 0;
-  }
-  renderQuestion();
-}
+      stats.forEach((st, idx) => {
+        const item = document.createElement('div');
+        item.className = 'stat-item';
+        item.innerHTML = `
+          <div class="stat-header">
+            <span>${st.label}</span>
+            <span>${st.val}%</span>
+          </div>
+          <div class="stat-bar-bg">
+            <div class="stat-bar-fill" id="stat-bar-${idx}"></div>
+          </div>
+        `;
+        statContainer.appendChild(item);
+      });
 
-renderQuestion();
-</script>
+      // 게이지 애니메이션
+      setTimeout(() => {
+        stats.forEach((st, idx) => {
+          const bar = document.getElementById(`stat-bar-${idx}`);
+          if (bar) bar.style.width = `${st.val}%`;
+        });
+      }, 100);
+
+      document.getElementById('res-item').innerText = currentResultData.item;
+      document.getElementById('res-food').innerText = currentResultData.food;
+      document.getElementById('res-best').innerText = currentResultData.best;
+      document.getElementById('res-tiki').innerText = currentResultData.tikitaka;
+
+      const tagsContainer = document.getElementById('res-tags');
+      tagsContainer.innerHTML = '';
+      currentResultData.tags.forEach(tag => {
+        const span = document.createElement('span');
+        span.className = 'tag';
+        span.innerText = tag;
+        tagsContainer.appendChild(span);
+      });
+    }
+
+    // 결과 전용 URL 생성 함수
+    function getResultUrl() {
+      const baseUrl = window.location.origin + window.location.pathname;
+      const charId = currentResultData ? currentResultData.id : 'chiikawa';
+      return `${baseUrl}?result=${charId}`;
+    }
+
+    function shareKakao() {
+      if (!window.Kakao) {
+        alert('카카오 SDK를 불러오지 못했습니다.');
+        return;
+      }
+    
+      const data = currentResultData || results.chiikawa;
+      const resultUrl = getResultUrl();
+      const absoluteImageUrl = new URL(data.img, window.location.href).href;
+    
+      Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: `나와 닮은 먼작귀 캐릭터는 ${data.name}!`,
+          description: `내 유형 결과를 확인하고 너의 먼작귀 캐릭터도 찾아봐!`,
+          imageUrl: absoluteImageUrl,
+          imageWidth: 400,
+          imageHeight: 400,
+          link: { mobileWebUrl: resultUrl, webUrl: resultUrl }
+        },
+        buttons: [
+          { title: '결과 확인하기', link: { mobileWebUrl: resultUrl, webUrl: resultUrl } }
+        ]
+      });
+    }
+
+    function shareTwitter() {
+      const resultUrl = getResultUrl();
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`나와 닮은 먼작귀 캐릭터는 ${currentResultData.name}!`)}&url=${encodeURIComponent(resultUrl)}`, '_blank');
+    }
+
+    function shareFacebook() {
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(getResultUrl())}`, '_blank');
+    }
+
+    function shareNaver() {
+      window.open(`https://share.naver.com/web/shareView?url=${encodeURIComponent(getResultUrl())}&title=${encodeURIComponent(`나와 닮은 먼작귀 캐릭터는 ${currentResultData.name}!`)}`, '_blank');
+    }
+
+    function copyLink() {
+      const resultUrl = getResultUrl();
+      navigator.clipboard.writeText(resultUrl).then(() => {
+        alert('결과 페이지 링크 복사 완료!');
+      }).catch(() => {
+        alert('복사 실패! 주소창에서 직접 복사해 주세요.');
+      });
+    }
+
+    function restartTest() {
+      // URL의 ?result=... 파라미터 제거 후 첫 화면으로
+      window.history.pushState({}, "", window.location.pathname);
+      currentQ = 0;
+      for (let key in charScores) {
+        charScores[key] = 0;
+      }
+      document.getElementById('result-view').style.display = 'none';
+      document.getElementById('start-view').style.display = 'block';
+    }
+  </script>
 </body>
 </html>

@@ -40,7 +40,6 @@
 
     .start-card { display: block; }
     
-    /* 메인 커버 이미지 박스 및 스타일 */
     .cover-img-box {
       width: 220px;
       height: 220px;
@@ -201,13 +200,79 @@
       box-shadow: 0 4px 12px rgba(2, 136, 209, 0.08) !important;
     }
 
-    .summary-text {
-      font-size: 14px;
-      line-height: 1.65;
-      color: #374151;
-      margin-bottom: 22px;
-      word-break: keep-all;
+    /* 서머리 박스 영역 */
+    .summary-box {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 18px 16px;
+      margin-bottom: 14px;
       text-align: left;
+    }
+
+    .summary-line {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #334155;
+      word-break: keep-all;
+      margin-bottom: 10px;
+      position: relative;
+      padding-left: 14px;
+    }
+
+    .summary-line:last-child { margin-bottom: 0; }
+
+    .summary-line::before {
+      content: "•";
+      position: absolute;
+      left: 2px;
+      top: 0;
+      color: #0288d1;
+      font-weight: bold;
+    }
+
+    .summary-line strong {
+      color: #0277bd;
+      font-weight: 800;
+    }
+
+    /* 스탯 바 섹션 */
+    .stat-section {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 16px 18px;
+      margin-bottom: 22px;
+      text-align: left;
+    }
+
+    .stat-item { margin-bottom: 12px; }
+    .stat-item:last-child { margin-bottom: 0; }
+
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+
+    .stat-bar-bg {
+      width: 100%;
+      height: 8px;
+      background-color: #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .stat-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #0288d1);
+      border-radius: 10px;
+      width: 0%;
+      transition: width 0.6s ease-in-out;
     }
 
     .info-section {
@@ -246,7 +311,6 @@
       word-break: keep-all;
     }
 
-    /* 케미 섹션을 2열 그리드로 변경 (info-section과 통일) */
     .chemistry-section {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -264,15 +328,8 @@
       align-items: center;
     }
 
-    .chem-item.best {
-      background-color: #f0fdf4;
-      border: 1px solid #bbf7d0;
-    }
-
-    .chem-item.tikitaka {
-      background-color: #fff1f2;
-      border: 1px solid #fecdd3;
-    }
+    .chem-item.best { background-color: #f0fdf4; border: 1px solid #bbf7d0; }
+    .chem-item.tikitaka { background-color: #fff1f2; border: 1px solid #fecdd3; }
 
     .chem-label {
       font-size: 12px;
@@ -395,7 +452,34 @@
       <h1 class="main-title" id="res-name"></h1>
       <div class="tag-container" id="res-tags"></div>
       <div class="quote-box" id="res-quote"></div>
-      <p class="summary-text" id="res-summary"></p>
+
+      <!-- 서머리 박스 영역 -->
+      <div class="summary-box" id="res-summary"></div>
+
+      <!-- 먼작귀 세계관 생존 스탯 -->
+      <div class="stat-section">
+        <div class="stat-item">
+          <div class="stat-header">
+            <span>⚔️ 토벌 능력</span>
+            <span id="stat-combat-val">0%</span>
+          </div>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" id="stat-combat-bar"></div></div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-header">
+            <span>🍀 생존 운</span>
+            <span id="stat-luck-val">0%</span>
+          </div>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" id="stat-luck-bar"></div></div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-header">
+            <span>🎀 귀여움</span>
+            <span id="stat-cute-val">0%</span>
+          </div>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" id="stat-cute-bar"></div></div>
+        </div>
+      </div>
 
       <div class="info-section">
         <div class="info-item">
@@ -549,7 +633,8 @@
         tags: ["#퓨어햄스터", "#귀여움", "#소심이"],
         quote: "“와.. 와아...!”",
         img: "./chiikawa.png",
-        summary: "겁이 많고 소심하지만, 친구들을 진심으로 아끼는 순수한 영혼의 소유자예요.\n위기가 닥칠 때마다 두려움에 눈물을 흘리면서도 용기를 내어 마주해요.\n존재만으로도 주변 사람들의 마음을 무장해제시키는 사랑스러운 존재예요.",
+        summary: "**겁이 많고 소심하지만**, 친구들을 진심으로 아끼는 순수한 영혼이에요.\n위기 순간마다 눈물을 흘리면서도 **결국 용기를 내어** 맞서 싸워요.\n존재만으로도 타인의 마음을 무장해제시키는 **무해한 매력의 소유자**입니다.",
+        stats: { combat: 45, luck: 95, cute: 100 },
         item: "곰돌이 가방", food: "소고기 전골",
         best: "하치와레", tikitaka: "모몽가"
       },
@@ -558,7 +643,8 @@
         tags: ["#인싸고양이", "#다정다감", "#프로기록러"],
         quote: "“어떻게든 돼라!”",
         img: "./hachiware.png",
-        summary: "어떤 상황에서도 길을 찾아내는 긍정적인 마인드를 가졌어요.\n주변 사람들의 마음을 세심하게 살피고, 일상의 소소한 순간들을 기록하는 낭만을 즐겨요.\n특유의 싹싹함으로 꼬인 상황을 기분 좋게 풀어내는 해결사예요.",
+        summary: "**어떤 위기 속에서도** 길을 찾아내는 놀라운 긍정 마인드를 가졌어요.\n주변의 기분을 세심하게 살피고, **소소한 일상을 기록하는** 낭만을 즐겨요.\n특유의 싹싹함과 센스로 난관을 해결하는 **든든한 해결사**입니다.",
+        stats: { combat: 70, luck: 80, cute: 90 },
         item: "카메라", food: "봉지 라면",
         best: "치이카와", tikitaka: "모몽가"
       },
@@ -567,7 +653,8 @@
         tags: ["#광기토끼", "#예측불허", "#숨은고수"],
         quote: "“우라! 야하! 하아?”",
         img: "./usagi.png",
-        summary: "말보다는 행동과 괴성으로 기선을 제압하는 괴짜 토끼예요.\n어디로 튈지 모르는 기상천외함 뒤에는 문제를 순식간에 해결해내는 압도적인 실력이 숨어 있어요.\n특유의 당당함과 넘치는 에너지로 모두의 마음을 단숨에 사로잡는 존재예요.",
+        summary: "말보다 괴성과 행동으로 상황을 제압하는 **기상천외한 자유로운 영혼**이에요.\n어디로 튈지 모르는 텐션 뒤에 **압도적인 생존 실력**이 숨어 있어요.\n거침없는 당당함과 돌발 행동으로 분위기를 반전시키는 **능력자**입니다.",
+        stats: { combat: 95, luck: 90, cute: 85 },
         item: "지팡이", food: "대형 푸딩",
         best: "치이카와", tikitaka: "모몽가"
       },
@@ -576,7 +663,8 @@
         tags: ["#하늘다람쥐", "#폭신한꼬리", "#관종"],
         quote: "“귀여워해라! 칭찬해라!”",
         img: "./momonga.png",
-        summary: "폭신한 꼬리와 매력적인 눈망울로 세상을 지배하려는 하늘다람쥐예요.\n남의 기분이나 시선은 아랑곳하지 않고 자신에 대한 칭찬을 요구하곤 해요.\n특유의 깜찍한 외모와 당당한 태도로 두 손 두 발을 다 들게 하는 캐릭터예요.",
+        summary: "폭신한 꼬리와 깜찍함으로 **세상의 귀여움을 독차지하고픈** 타입이에요.\n남들의 시선은 아랑곳하지 않고 **당당하게 관심과 칭찬을 요구**해요.\n미워할 수 없는 뻔뻔함과 매력으로 주변을 이리저리 휘두르는 **신스틸러**입니다.",
+        stats: { combat: 30, luck: 85, cute: 98 },
         item: "간식", food: "흰쌀밥",
         best: "카니", tikitaka: "우사기"
       },
@@ -585,7 +673,8 @@
         tags: ["#애주가수달", "#혼술", "#츤데레"],
         quote: "“캬-!”",
         img: "./kurimanju.png",
-        summary: "바쁜 일상 속에서도 한 잔의 여유를 만끽할 줄 아는 진정한 낭만파예요.\n무심해 보이지만 도움이 필요할 땐 슬쩍 다가와 챙겨주는 어른스러움을 지니고 있어요.\n복잡한 생각은 훌훌 털어내고 현재의 소소한 즐거움에 집중하는 쿨한 삶의 소유자예요.",
+        summary: "바쁜 일상 속에서도 **한 잔의 여유를 아는** 진정한 어른스러운 낭만파예요.\n겉으로는 무심해 보여도 남몰래 **슬쩍 다가와 챙겨주는 츤데레**예요.\n복잡한 생각은 털어내고 현재의 소소한 즐거움에 집중하는 **쿨한 매력**이 있어요.",
+        stats: { combat: 75, luck: 75, cute: 80 },
         item: "음주 자격증", food: "밤만쥬",
         best: "시사", tikitaka: "우사기"
       },
@@ -594,7 +683,8 @@
         tags: ["#실력파해달", "#디저트매니아", "#반전매력"],
         quote: "“강해지려면 브로콜리도 남기지 말고 먹어야해”",
         img: "./rakko.png",
-        summary: "토벌 순위 1위에 빛나는 세계관 최강자예요.\n엄청난 카리스마와 철저한 자기관리의 뒤에는 달콤한 디저트에 눈을 반짝이는 반전 매력이 숨어 있어요.\n자신에게는 엄격하지만 후배들에게는 아낌없이 가르침을 주는 다정한 스승님이에요.",
+        summary: "랭킹 1위에 빛나는 **세계관 최고 실력자이자 철저한 자기관리의 신**이에요.\n카리스마 넘치는 모습 뒤에 **달콤한 디저트에 눈을 반짝이는 반전**이 있어요.\n스스로에게 엄격하지만 후배들을 아낌없이 이끄는 **다정한 스승님**입니다.",
+        stats: { combat: 100, luck: 70, cute: 88 },
         item: "무기", food: "딸기 파르페",
         best: "하치와레", tikitaka: "모몽가"
       },
@@ -603,7 +693,8 @@
         tags: ["#수호신", "#노력파", "#라멘집알바"],
         quote: "“사부님!”",
         img: "./shisa.png",
-        summary: "목표를 정하면 끝까지 해내고야 마는 성장형 캐릭터예요.\n환한 미소와 예의 바른 태도로 주변 사람들에게 깊은 신뢰를 받아요.\n라멘집 아르바이트부터 자격증 공부까지, 좋아하는 일에는 진심을 다하는 모범생이에요.",
+        summary: "목표를 세우면 끝까지 끈기 있게 해내는 **성실함의 대명사**예요.\n밝은 미소와 싹싹한 예의로 **주변 사람들의 신뢰를 한몸에** 받아요.\n좋아하는 일에는 배움을 마다하지 않는 **열정 넘치는 모범생**입니다.",
+        stats: { combat: 60, luck: 75, cute: 92 },
         item: "슈퍼 아르바이터 자격증", food: "특제 라멘",
         best: "쿠리만쥬", tikitaka: "모몽가"
       },
@@ -612,7 +703,8 @@
         tags: ["#헌책방주인", "#상냥함", "#수용력100%"],
         quote: "“헤헷!”",
         img: "./kani.png",
-        summary: "수줍음이 많지만 마음 깊은 곳에 다정함이 있는 헌책방 주인이에요.\n상대방의 투정과 앙탈에도 미소를 잃지 않고 다정하게 대해 주는 대인배예요.\n특유의 포근한 에너지와 세심한 배려로 곁에 있는 것만으로도 마음을 편안하게 해줘요.",
+        summary: "수줍음이 많지만 마음 깊은 곳에 **따뜻하고 세심한 배려**가 가득해요.\n어떤 앙탈과 투정도 다정하게 받아주는 **넓은 포용력의 대인배**예요.\n함께 있는 것만으로도 상대의 마음을 편안하게 만드는 **포근한 존재**입니다.",
+        stats: { combat: 40, luck: 80, cute: 94 },
         item: "게 머리띠", food: "수제 만두",
         best: "모몽가", tikitaka: "우사기"
       },
@@ -621,7 +713,8 @@
         tags: ["#외눈박이거인", "#고블린경호원", "#든든함"],
         quote: "“또 같이 놀자!”",
         img: "./ode.png",
-        summary: "무시무시한 외모와 달리 따뜻한 마음을 지닌 거인이에요.\n위기 상황이 닥치면 친구들을 지키기 위해 자신을 희생하는 의리파예요.\n말수는 적지만 행동으로 감동을 안겨주며, 외롭던 날들 속에 찾아와 준 다정함을 가슴 깊이 간직하는 존재예요.",
+        summary: "웅장한 외모와 달리 **묵직한 신뢰감과 따뜻함**을 가지고 있어요.\n위기 속에서 타인을 위해 선뜻 자신을 던지는 **남다른 의리파**예요.\n작은 다정함도 오래도록 가슴 깊이 기억하고 **보답하려는 진국**입니다.",
+        stats: { combat: 85, luck: 50, cute: 70 },
         item: "감옥 열쇠", food: "감옥 빵과 스튜",
         best: "쿠리만쥬", tikitaka: "고블린"
       }
@@ -692,7 +785,38 @@
       document.getElementById('res-sub').innerText = currentResultData.title;
       document.getElementById('res-name').innerText = currentResultData.name;
       document.getElementById('res-quote').innerText = currentResultData.quote;
-      document.getElementById('res-summary').innerText = currentResultData.summary;
+      
+      // 서머리 마크다운 파싱 및 박스 바인딩
+      const summaryBox = document.getElementById('res-summary');
+      summaryBox.innerHTML = '';
+      const lines = currentResultData.summary.split('\n');
+      lines.forEach(line => {
+        if (line.trim() !== '') {
+          const formattedLine = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+          const p = document.createElement('p');
+          p.className = 'summary-line';
+          p.innerHTML = formattedLine;
+          summaryBox.appendChild(p);
+        }
+      });
+
+      // 스탯 데이터 바인딩 및 애니메이션 효과
+      const stats = currentResultData.stats || { combat: 50, luck: 50, cute: 50 };
+      document.getElementById('stat-combat-val').innerText = `${stats.combat}%`;
+      document.getElementById('stat-luck-val').innerText = `${stats.luck}%`;
+      document.getElementById('stat-cute-val').innerText = `${stats.cute}%`;
+
+      // 게이지 초기화 후 바 채우기
+      document.getElementById('stat-combat-bar').style.width = '0%';
+      document.getElementById('stat-luck-bar').style.width = '0%';
+      document.getElementById('stat-cute-bar').style.width = '0%';
+
+      setTimeout(() => {
+        document.getElementById('stat-combat-bar').style.width = `${stats.combat}%`;
+        document.getElementById('stat-luck-bar').style.width = `${stats.luck}%`;
+        document.getElementById('stat-cute-bar').style.width = `${stats.cute}%`;
+      }, 100);
+
       document.getElementById('res-item').innerText = currentResultData.item;
       document.getElementById('res-food').innerText = currentResultData.food;
       document.getElementById('res-best').innerText = currentResultData.best;

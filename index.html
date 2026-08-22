@@ -456,30 +456,8 @@
       <!-- 서머리 박스 영역 -->
       <div class="summary-box" id="res-summary"></div>
 
-      <!-- 먼작귀 세계관 생존 스탯 -->
-      <div class="stat-section">
-        <div class="stat-item">
-          <div class="stat-header">
-            <span>⚔️ 토벌 능력</span>
-            <span id="stat-combat-val">0%</span>
-          </div>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" id="stat-combat-bar"></div></div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-header">
-            <span>🍀 생존 운</span>
-            <span id="stat-luck-val">0%</span>
-          </div>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" id="stat-luck-bar"></div></div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-header">
-            <span>🎀 귀여움</span>
-            <span id="stat-cute-val">0%</span>
-          </div>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" id="stat-cute-bar"></div></div>
-        </div>
-      </div>
+      <!-- 캐릭터 맞춤 스탯 영역 (JS에서 동적 생성) -->
+      <div class="stat-section" id="res-stats-container"></div>
 
       <div class="info-section">
         <div class="info-item">
@@ -634,7 +612,11 @@
         quote: "“와.. 와아...!”",
         img: "./chiikawa.png",
         summary: "**겁이 많고 소심하지만**, 친구들을 진심으로 아끼는 순수한 영혼이에요.\n위기 순간마다 눈물을 흘리면서도 **결국 용기를 내어** 맞서 싸워요.\n존재만으로도 타인의 마음을 무장해제시키는 **무해한 매력의 소유자**입니다.",
-        stats: { combat: 45, luck: 95, cute: 100 },
+        stats: [
+          { label: "🎀 귀여움", val: 100 },
+          { label: "🔥 용기", val: 50 },
+          { label: "⚔️ 전투력", val: 30 }
+        ],
         item: "곰돌이 가방", food: "소고기 전골",
         best: "하치와레", tikitaka: "모몽가"
       },
@@ -644,7 +626,11 @@
         quote: "“어떻게든 돼라!”",
         img: "./hachiware.png",
         summary: "**어떤 위기 속에서도** 길을 찾아내는 놀라운 긍정 마인드를 가졌어요.\n주변의 기분을 세심하게 살피고, **소소한 일상을 기록하는** 낭만을 즐겨요.\n특유의 싹싹함과 센스로 난관을 해결하는 **든든한 해결사**입니다.",
-        stats: { combat: 70, luck: 80, cute: 90 },
+        stats: [
+          { label: "🤝 친화력", val: 100 },
+          { label: "🏠 생활력", val: 80 },
+          { label: "⚔️ 전투력", val: 50 }
+        ],
         item: "카메라", food: "봉지 라면",
         best: "치이카와", tikitaka: "모몽가"
       },
@@ -654,7 +640,11 @@
         quote: "“우라! 야하! 하아?”",
         img: "./usagi.png",
         summary: "말보다 괴성과 행동으로 상황을 제압하는 **기상천외한 자유로운 영혼**이에요.\n어디로 튈지 모르는 텐션 뒤에 **압도적인 생존 실력**이 숨어 있어요.\n거침없는 당당함과 돌발 행동으로 분위기를 반전시키는 **능력자**입니다.",
-        stats: { combat: 95, luck: 90, cute: 85 },
+        stats: [
+          { label: "🌀 텐션", val: 100 },
+          { label: "⚡ 순발력", val: 100 },
+          { label: "⚔️ 전투력", val: 90 }
+        ],
         item: "지팡이", food: "대형 푸딩",
         best: "치이카와", tikitaka: "모몽가"
       },
@@ -664,7 +654,11 @@
         quote: "“귀여워해라! 칭찬해라!”",
         img: "./momonga.png",
         summary: "폭신한 꼬리와 깜찍함으로 **세상의 귀여움을 독차지하고픈** 타입이에요.\n남들의 시선은 아랑곳하지 않고 **당당하게 관심과 칭찬을 요구**해요.\n미워할 수 없는 뻔뻔함과 매력으로 주변을 이리저리 휘두르는 **신스틸러**입니다.",
-        stats: { combat: 30, luck: 85, cute: 98 },
+        stats: [
+          { label: "👑 애교력", val: 100 },
+          { label: "📢 관종력", val: 100 },
+          { label: "🏠 생활력", val: 0 }
+        ],
         item: "간식", food: "흰쌀밥",
         best: "카니", tikitaka: "우사기"
       },
@@ -674,7 +668,11 @@
         quote: "“캬-!”",
         img: "./kurimanju.png",
         summary: "바쁜 일상 속에서도 **한 잔의 여유를 아는** 진정한 어른스러운 낭만파예요.\n겉으로는 무심해 보여도 남몰래 **슬쩍 다가와 챙겨주는 츤데레**예요.\n복잡한 생각은 털어내고 현재의 소소한 즐거움에 집중하는 **쿨한 매력**이 있어요.",
-        stats: { combat: 75, luck: 75, cute: 80 },
+        stats: [
+          { label: "🍺 알콜 지수", val: 100 },
+          { label: "😎 어른미", val: 100 },
+          { label: "💖 다정함", val: 80 }
+        ],
         item: "음주 자격증", food: "밤만쥬",
         best: "시사", tikitaka: "우사기"
       },
@@ -684,7 +682,11 @@
         quote: "“강해지려면 브로콜리도 남기지 말고 먹어야해”",
         img: "./rakko.png",
         summary: "랭킹 1위에 빛나는 **세계관 최고 실력자이자 철저한 자기관리의 신**이에요.\n카리스마 넘치는 모습 뒤에 **달콤한 디저트에 눈을 반짝이는 반전**이 있어요.\n스스로에게 엄격하지만 후배들을 아낌없이 이끄는 **다정한 스승님**입니다.",
-        stats: { combat: 100, luck: 70, cute: 88 },
+        stats: [
+          { label: "🕶️ 리더십", val: 100 },
+          { label: "⚔️ 전투력", val: 100 },
+          { label: "🍰 당 충전", val: 90 }
+        ],
         item: "무기", food: "딸기 파르페",
         best: "하치와레", tikitaka: "모몽가"
       },
@@ -694,7 +696,11 @@
         quote: "“사부님!”",
         img: "./shisa.png",
         summary: "목표를 세우면 끝까지 끈기 있게 해내는 **성실함의 대명사**예요.\n밝은 미소와 싹싹한 예의로 **주변 사람들의 신뢰를 한몸에** 받아요.\n좋아하는 일에는 배움을 마다하지 않는 **열정 넘치는 모범생**입니다.",
-        stats: { combat: 60, luck: 75, cute: 92 },
+        stats: [
+          { label: "📚 성실함", val: 100 },
+          { label: "🍜 적응력", val: 100 },
+          { label: "🏠 생활력", val: 100 }
+        ],
         item: "슈퍼 아르바이터 자격증", food: "특제 라멘",
         best: "쿠리만쥬", tikitaka: "모몽가"
       },
@@ -704,7 +710,11 @@
         quote: "“헤헷!”",
         img: "./kani.png",
         summary: "수줍음이 많지만 마음 깊은 곳에 **따뜻하고 세심한 배려**가 가득해요.\n어떤 앙탈과 투정도 다정하게 받아주는 **넓은 포용력의 대인배**예요.\n함께 있는 것만으로도 상대의 마음을 편안하게 만드는 **포근한 존재**입니다.",
-        stats: { combat: 40, luck: 80, cute: 94 },
+        stats: [
+          { label: "📖 지성", val: 100 },
+          { label: "🦀 포용력", val: 90 },
+          { label: "🤫 수줍음", val: 70 }
+        ],
         item: "게 머리띠", food: "수제 만두",
         best: "모몽가", tikitaka: "우사기"
       },
@@ -714,7 +724,11 @@
         quote: "“또 같이 놀자!”",
         img: "./ode.png",
         summary: "웅장한 외모와 달리 **묵직한 신뢰감과 따뜻함**을 가지고 있어요.\n위기 속에서 타인을 위해 선뜻 자신을 던지는 **남다른 의리파**예요.\n작은 다정함도 오래도록 가슴 깊이 기억하고 **보답하려는 진국**입니다.",
-        stats: { combat: 85, luck: 50, cute: 70 },
+        stats: [
+          { label: "🛡️ 의리", val: 100 },
+          { label: "💪 피지컬", val: 100 },
+          { label: "⚔️ 전투력", val: 100 }
+        ],
         item: "감옥 열쇠", food: "감옥 빵과 스튜",
         best: "쿠리만쥬", tikitaka: "고블린"
       }
@@ -800,21 +814,33 @@
         }
       });
 
-      // 스탯 데이터 바인딩 및 애니메이션 효과
-      const stats = currentResultData.stats || { combat: 50, luck: 50, cute: 50 };
-      document.getElementById('stat-combat-val').innerText = `${stats.combat}%`;
-      document.getElementById('stat-luck-val').innerText = `${stats.luck}%`;
-      document.getElementById('stat-cute-val').innerText = `${stats.cute}%`;
+      // 스탯 박스 동적 생성
+      const statContainer = document.getElementById('res-stats-container');
+      statContainer.innerHTML = '';
 
-      // 게이지 초기화 후 바 채우기
-      document.getElementById('stat-combat-bar').style.width = '0%';
-      document.getElementById('stat-luck-bar').style.width = '0%';
-      document.getElementById('stat-cute-bar').style.width = '0%';
+      const stats = currentResultData.stats || [];
 
+      stats.forEach((st, idx) => {
+        const item = document.createElement('div');
+        item.className = 'stat-item';
+        item.innerHTML = `
+          <div class="stat-header">
+            <span>${st.label}</span>
+            <span>${st.val}%</span>
+          </div>
+          <div class="stat-bar-bg">
+            <div class="stat-bar-fill" id="stat-bar-${idx}"></div>
+          </div>
+        `;
+        statContainer.appendChild(item);
+      });
+
+      // 게이지 채우기 애니메이션 효과
       setTimeout(() => {
-        document.getElementById('stat-combat-bar').style.width = `${stats.combat}%`;
-        document.getElementById('stat-luck-bar').style.width = `${stats.luck}%`;
-        document.getElementById('stat-cute-bar').style.width = `${stats.cute}%`;
+        stats.forEach((st, idx) => {
+          const bar = document.getElementById(`stat-bar-${idx}`);
+          if (bar) bar.style.width = `${st.val}%`;
+        });
       }, 100);
 
       document.getElementById('res-item').innerText = currentResultData.item;

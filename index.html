@@ -40,7 +40,7 @@
 
     .start-card { display: block; }
     
-    /* 메인 커버 이미지 박스 및 스타일 수정 */
+    /* 메인 커버 이미지 박스 및 스타일 */
     .cover-img-box {
       width: 220px;
       height: 220px;
@@ -57,7 +57,7 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      filter: none; /* 경계선 및 그림자 효과 제거 */
+      filter: none;
       border: none;
       outline: none;
     }
@@ -214,7 +214,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
     .info-item {
@@ -246,14 +246,52 @@
       word-break: keep-all;
     }
 
-    .chemistry-section { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
-    .chem-box { border-radius: 16px; padding: 14px 16px; text-align: left; }
-    .chem-box.best { background-color: #f0fdf4; border: 1px solid #bbf7d0; }
-    .chem-box.tikitaka { background-color: #fff1f2; border: 1px solid #fecdd3; }
-    .chem-title { font-size: 13px; font-weight: 800; margin-bottom: 4px; }
-    .chem-box.best .chem-title { color: #166534; }
-    .chem-box.tikitaka .chem-title { color: #9f1239; }
-    .chem-desc { font-size: 13px; color: #374151; line-height: 1.4; }
+    /* 케미 섹션을 2열 그리드로 변경 (info-section과 통일) */
+    .chemistry-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .chem-item {
+      border-radius: 16px;
+      padding: 14px 10px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .chem-item.best {
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+    }
+
+    .chem-item.tikitaka {
+      background-color: #fff1f2;
+      border: 1px solid #fecdd3;
+    }
+
+    .chem-label {
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .chem-item.best .chem-label { color: #166534; }
+    .chem-item.tikitaka .chem-label { color: #9f1239; }
+
+    .chem-value {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #1f2937;
+      word-break: keep-all;
+    }
 
     .share-section {
       display: flex;
@@ -371,13 +409,13 @@
       </div>
 
       <div class="chemistry-section">
-        <div class="chem-box best">
-          <div class="chem-title" id="res-best-title"></div>
-          <div class="chem-desc">보기만 해도 마음이 몽글몽글해지는 소울메이트</div>
+        <div class="chem-item best">
+          <span class="chem-label">💖 베스트 프렌드</span>
+          <p class="chem-value" id="res-best"></p>
         </div>
-        <div class="chem-box tikitaka">
-          <div class="chem-title" id="res-tiki-title"></div>
-          <div class="chem-desc" id="res-tiki-desc"></div>
+        <div class="chem-item tikitaka">
+          <span class="chem-label">⚡ 환장의 티키타카</span>
+          <p class="chem-value" id="res-tiki"></p>
         </div>
       </div>
 
@@ -513,8 +551,7 @@
         img: "./chiikawa.png",
         summary: "겁이 많고 소심하지만, 친구들을 진심으로 아끼는 순수한 영혼의 소유자예요.\n위기가 닥칠 때마다 두려움에 눈물을 흘리면서도 용기를 내어 마주해요.\n존재만으로도 주변 사람들의 마음을 무장해제시키는 사랑스러운 존재예요.",
         item: "곰돌이 가방", food: "소고기 전골",
-        best: "하치와레", tikitaka: "모몽가",
-        tikitakaChem: "제멋대로인 모몽가에게 이리저리 휘둘리는 수난 조합!"
+        best: "하치와레", tikitaka: "모몽가"
       },
       hachiware: {
         name: "하치와레", title: "다정하고 긍정적인 분위기 메이커",
@@ -523,8 +560,7 @@
         img: "./hachiware.png",
         summary: "어떤 상황에서도 길을 찾아내는 긍정적인 마인드를 가졌어요.\n주변 사람들의 마음을 세심하게 살피고, 일상의 소소한 순간들을 기록하는 낭만을 즐겨요.\n특유의 싹싹함으로 꼬인 상황을 기분 좋게 풀어내는 해결사예요.",
         item: "카메라", food: "봉지 라면",
-        best: "치이카와", tikitaka: "모몽가",
-        tikitakaChem: "모몽가에게 가진 걸 전부 내어주게 되는 일방통행 조합!"
+        best: "치이카와", tikitaka: "모몽가"
       },
       usagi: {
         name: "우사기", title: "거침없이 돌진하는 마이웨이의 소유자",
@@ -533,8 +569,7 @@
         img: "./usagi.png",
         summary: "말보다는 행동과 괴성으로 기선을 제압하는 괴짜 토끼예요.\n어디로 튈지 모르는 기상천외함 뒤에는 문제를 순식간에 해결해내는 압도적인 실력이 숨어 있어요.\n특유의 당당함과 넘치는 에너지로 모두의 마음을 단숨에 사로잡는 존재예요.",
         item: "지팡이", food: "대형 푸딩",
-        best: "치이카와", tikitaka: "모몽가",
-        tikitakaChem: "귀찮게 덤벼드는 모몽가를 단숨에 제압해 버리는 예측불허 조합!"
+        best: "치이카와", tikitaka: "모몽가"
       },
       momonga: {
         name: "모몽가", title: "뻔뻔함도 실력! 귀여움으로 무장한 떼쟁이",
@@ -543,8 +578,7 @@
         img: "./momonga.png",
         summary: "폭신한 꼬리와 매력적인 눈망울로 세상을 지배하려는 하늘다람쥐예요.\n남의 기분이나 시선은 아랑곳하지 않고 자신에 대한 칭찬을 요구하곤 해요.\n특유의 깜찍한 외모와 당당한 태도로 두 손 두 발을 다 들게 하는 캐릭터예요.",
         item: "간식", food: "흰쌀밥",
-        best: "카니", tikitaka: "우사기",
-        tikitakaChem: "앙탈과 떼쓰기로 관심을 끌어 보려다가 순식간에 기선제압 당하는 엉뚱 조합!"
+        best: "카니", tikitaka: "우사기"
       },
       kurimanju: {
         name: "쿠리만쥬", title: "술 한 잔의 여유를 아는 낭만 미식가",
@@ -553,8 +587,7 @@
         img: "./kurimanju.png",
         summary: "바쁜 일상 속에서도 한 잔의 여유를 만끽할 줄 아는 진정한 낭만파예요.\n무심해 보이지만 도움이 필요할 땐 슬쩍 다가와 챙겨주는 어른스러움을 지니고 있어요.\n복잡한 생각은 훌훌 털어내고 현재의 소소한 즐거움에 집중하는 쿨한 삶의 소유자예요.",
         item: "음주 자격증", food: "밤만쥬",
-        best: "시사", tikitaka: "우사기",
-        tikitakaChem: "조용하게 한잔하며 여유를 즐기고 싶은데 옆에서 정신없이 시끄럽게 구는 조합!"
+        best: "시사", tikitaka: "우사기"
       },
       rakko: {
         name: "랏코", title: "카리스마 넘치는 든든한 랭킹 1위",
@@ -563,8 +596,7 @@
         img: "./rakko.png",
         summary: "토벌 순위 1위에 빛나는 세계관 최강자예요.\n엄청난 카리스마와 철저한 자기관리의 뒤에는 달콤한 디저트에 눈을 반짝이는 반전 매력이 숨어 있어요.\n자신에게는 엄격하지만 후배들에게는 아낌없이 가르침을 주는 다정한 스승님이에요.",
         item: "무기", food: "딸기 파르페",
-        best: "하치와레", tikitaka: "모몽가",
-        tikitakaChem: "엄격하고 진지하게 가르치려 해도 자꾸 게으름 피우는 모습에 어리둥절해하는 조합!"
+        best: "하치와레", tikitaka: "모몽가"
       },
       shisa: {
         name: "시사", title: "성실함과 예의를 갖춘 아르바이트생",
@@ -573,28 +605,25 @@
         img: "./shisa.png",
         summary: "목표를 정하면 끝까지 해내고야 마는 성장형 캐릭터예요.\n환한 미소와 예의 바른 태도로 주변 사람들에게 깊은 신뢰를 받아요.\n라멘집 아르바이트부터 자격증 공부까지, 좋아하는 일에는 진심을 다하는 모범생이에요.",
         item: "슈퍼 아르바이터 자격증", food: "특제 라멘",
-        best: "쿠리만쥬", tikitaka: "모몽가",
-        tikitakaChem: "일터에서 일은 안 하고 뻔뻔하게 응석을 부려서 자꾸 당황하게 만드는 조합!"
+        best: "쿠리만쥬", tikitaka: "모몽가"
       },
       kani: {
         name: "카니", title: "조용하고 따뜻한 지성파",
         tags: ["#헌책방주인", "#상냥함", "#수용력100%"],
         quote: "“헤헷!”",
         img: "./kani.png",
-        summary: "수줍음이 많지만 마음 깊은 곳에 다정함이 있는 헌책방 주인이에요.\n상대방의 투정과 앙탈에도 미소를 잃지 않고 다정하게 대해 주는 대인배예요.\n특유의 포근한 에너지와 세심한 배려로 주변 사람들의 마음을 편안하게 해 줘요.",
-        item: "게 머리띠", food: "카레 볶음밥",
-        best: "모몽가", tikitaka: "우사기",
-        tikitakaChem: "조용한 서점에 불쑥 나타나 예상치 못한 장난을 치는 우사기 때문에 영혼이 탈곡되는 조합!"
+        summary: "수줍음이 많지만 마음 깊은 곳에 다정함이 있는 헌책방 주인이에요.\n상대방의 투정과 앙탈에도 미소를 잃지 않고 다정하게 대해 주는 대인배예요.\n특유의 포근한 에너지와 세심한 배려로 곁에 있는 것만으로도 마음을 편안하게 해줘요.",
+        item: "게 머리띠", food: "수제 만두",
+        best: "모몽가", tikitaka: "우사기"
       },
       ode: {
         name: "오데", title: "커다란 덩치에 숨겨진 의리와 외로움",
         tags: ["#외눈박이거인", "#고블린경호원", "#든든함"],
         quote: "“또 같이 놀자!”",
         img: "./ode.png",
-        summary: "무시무시한 외모와 달리 따뜻한 마음을 지닌 거인이에요.\n위기 상황이 닥치면 친구들을 지키기 위해 자신을 희생하는 의리파예요.\n말수는 적지만 행동으로 마음을 표현하며, 외로웠던 자신에게 건네진 조그만 온기도 절대 잊지 않고 보답해요.",
-        item: "감옥 열쇠", food: "오렌지 주스",
-        best: "쿠리만쥬", tikitaka: "고블린",
-        tikitakaChem: "서로 말없이 조용히 안부만 건네며 조용히 음식을 나눠 먹는 묵직한 마이웨이 케미!"
+        summary: "무시무시한 외모와 달리 따뜻한 마음을 지닌 거인이에요.\n위기 상황이 닥치면 친구들을 지키기 위해 자신을 희생하는 의리파예요.\n말수는 적지만 행동으로 감동을 안겨주며, 외롭던 날들 속에 찾아와 준 다정함을 가슴 깊이 간직하는 존재예요.",
+        item: "감옥 열쇠", food: "감옥 빵과 스튜",
+        best: "쿠리만쥬", tikitaka: "고블린"
       }
     };
 
@@ -666,9 +695,8 @@
       document.getElementById('res-summary').innerText = currentResultData.summary;
       document.getElementById('res-item').innerText = currentResultData.item;
       document.getElementById('res-food').innerText = currentResultData.food;
-      document.getElementById('res-best-title').innerText = `💖 베스트 프렌드: ${currentResultData.best}`;
-      document.getElementById('res-tiki-title').innerText = `⚡ 환장의 티키타카: ${currentResultData.tikitaka}`;
-      document.getElementById('res-tiki-desc').innerText = currentResultData.tikitakaChem;
+      document.getElementById('res-best').innerText = currentResultData.best;
+      document.getElementById('res-tiki').innerText = currentResultData.tikitaka;
 
       const tagsContainer = document.getElementById('res-tags');
       tagsContainer.innerHTML = '';
@@ -694,9 +722,8 @@
         objectType: 'feed',
         content: {
           title: `나와 닮은 먼작귀 캐릭터는 ${data.name}!`,
-          // 기존의 큰 imageUrl을 제거하거나 아래 itemContent와 함께 조율
           imageUrl: absoluteImageUrl,
-          imageWidth: 400, // 카카오 권장 최소 규격 조절
+          imageWidth: 400,
           imageHeight: 400,
           link: { mobileWebUrl: siteUrl, webUrl: siteUrl }
         },

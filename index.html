@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -413,6 +412,28 @@
     .btn-sub-sns.facebook { background-color: #1877f2; color: #ffffff; }
     .btn-sub-sns.naver { background-color: #03cf5d; color: #ffffff; }
 
+    /* 광고 배너 영역 (Kakao AdFit) */
+    .ad-banner {
+      width: 100%;
+      max-width: 420px;
+      min-height: 100px;
+      margin: 20px auto 0 !important;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .ad-banner.ad-banner-sm {
+      min-height: 50px;
+    }
+
+    /* 전역 리셋(* { margin: 0 }) 때문에 광고 태그의 여백이 0으로 눌리는 것을 방지 */
+    .ad-banner ins {
+      margin: 0 auto !important;
+    }
+
     @media (max-width: 380px) {
       .container { padding: 24px 16px; }
       .cover-title { font-size: 21px; }
@@ -460,6 +481,14 @@
       <!-- 캐릭터 맞춤 스탯 영역 (JS에서 동적 생성) -->
       <div class="stat-section" id="res-stats-container"></div>
 
+      <!-- 중간 배너 -->
+      <div class="ad-banner" id="ad-banner-middle">
+        <ins class="kakao_ad_area" style="display:none;"
+          data-ad-unit="DAN-DGe2UeIwC33JoezS"
+          data-ad-width="320"
+          data-ad-height="100"></ins>
+      </div>
+
       <div class="info-section">
         <div class="info-item">
           <span class="info-label">🍀 행운의 아이템</span>
@@ -506,6 +535,15 @@
     </div>
   </div>
 
+  <!-- 하단 배너 -->
+  <div class="ad-banner ad-banner-sm" id="ad-banner-bottom">
+    <ins class="kakao_ad_area" style="display:none;"
+      data-ad-unit="DAN-GXHd9G2LcKRj10k8"
+      data-ad-width="320"
+      data-ad-height="50"></ins>
+  </div>
+  <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+
   <script>
     const JAVASCRIPT_KEY = '45851354763e4eb82596527c8f662c33';
 
@@ -517,7 +555,7 @@
       {
         q: "기다리던 주말, 나만의 힐링 방법은?",
         a: [
-          { text: "아늑한 방에서 혼자 조용히 휴식을 취해요", char: "chiikawa" },
+          { text: "아늑한 방에서 혼자 조용히 휴식을 취해요", char: "chiikawa", weight: 3 },
           { text: "친구들과 함께 웃고 떠들며 추억을 만들어요", char: "hachiware" },
           { text: "특별한 계획이 없어도 일단 밖으로 나가요", char: "usagi" },
           { text: "맛있는 음식을 잔뜩 먹으며 느긋하게 즐겨요", char: "kurimanju" }
@@ -535,7 +573,7 @@
       {
         q: "여러 친구들과 함께 있을 때 나의 모습은?",
         a: [
-          { text: "대화를 주도하고 친구들을 다정하게 챙겨요", char: "hachiware" },
+          { text: "대화를 주도하고 친구들을 다정하게 챙겨요", char: "hachiware", weight: 3 },
           { text: "나만의 존재감과 매력을 당당하게 어필해요", char: "momonga" },
           { text: "이야기를 차분하게 듣고 실질적인 도움을 줘요", char: "kani" },
           { text: "말수는 적지만 뒤에서 든든하게 지켜줘요", char: "ode" }
@@ -546,7 +584,7 @@
         a: [
           { text: "주변 사람들의 관심과 칭찬을 받을 때", char: "momonga" },
           { text: "나의 정보나 조언이 타인에게 도움이 될 때", char: "kani" },
-          { text: "시련을 극복하고 스스로 성장했다고 느낄 때", char: "rakko" },
+          { text: "시련을 극복하고 스스로 성장했다고 느낄 때", char: "rakko", weight: 3 },
           { text: "열심히 일한 만큼 성과를 인정받았을 때", char: "shisa" }
         ]
       },
@@ -556,7 +594,7 @@
           { text: "부끄러워서 얼굴이 빨개지지만 속으로는 기뻐해요", char: "chiikawa" },
           { text: "“더 칭찬해 봐!”라며 당당하게 요구해요", char: "momonga" },
           { text: "예의 바르게 감사하다는 말을 전해요", char: "shisa" },
-          { text: "덤덤하고 태연한 얼굴로 고마움을 표해요", char: "ode" }
+          { text: "덤덤하고 태연한 얼굴로 고마움을 표해요", char: "ode", weight: 3 }
         ]
       },
       {
@@ -565,14 +603,14 @@
           { text: "맛있는 술과 안주로 피로를 털어버려요", char: "kurimanju" },
           { text: "신나는 춤과 노래로 에너지를 발산해요", char: "usagi" },
           { text: "달콤한 디저트를 먹으며 기분을 전환시켜요", char: "rakko" },
-          { text: "조용한 곳에서 책을 읽으며 생각을 정리해요", char: "kani" }
+          { text: "조용한 곳에서 책을 읽으며 생각을 정리해요", char: "kani", weight: 3 }
         ]
       },
       {
         q: "낯선 사람들로 가득한 파티에서 나의 모습은?",
         a: [
           { text: "먼저 다가가서 친근하게 인사를 건네요", char: "hachiware" },
-          { text: "남들의 시선은 신경쓰지 않고 자유롭게 행동해요", char: "usagi" },
+          { text: "남들의 시선은 신경쓰지 않고 자유롭게 행동해요", char: "usagi", weight: 3 },
           { text: "구석에서 분위기를 살피며 서서히 적응해요", char: "chiikawa" },
           { text: "나서지 않고 제자리에 가만히 앉아 있어요", char: "ode" }
         ]
@@ -580,7 +618,7 @@
       {
         q: "새로운 취미 활동을 시작해야 한다면?",
         a: [
-          { text: "자격증까지 딸 수 있는 실용적인 취미를 가져요", char: "shisa" },
+          { text: "자격증까지 딸 수 있는 실용적인 취미를 가져요", char: "shisa", weight: 3 },
           { text: "근사한 요리나 음료를 만드는 법을 배워요", char: "kurimanju" },
           { text: "혼자서도 즐길 수 있는 정적인 활동을 해요", char: "kani" },
           { text: "체력을 키우고 자신감을 얻을 수 있는 운동을 배워요", char: "rakko" }
@@ -592,13 +630,13 @@
           { text: "소소한 선물이나 편지를 수줍게 건네요", char: "chiikawa" },
           { text: "상대가 필요로 할 때 곁에서 든든하게 도움을 줘요", char: "ode" },
           { text: "취향을 기억해 뒀다가 은근슬쩍 챙겨줘요", char: "kani" },
-          { text: "애교와 돌직구로 상대의 시선을 사로잡아요", char: "momonga" }
+          { text: "애교와 돌직구로 상대의 시선을 사로잡아요", char: "momonga", weight: 3 }
         ]
       },
       {
         q: "나의 가장 큰 매력 포인트는?",
         a: [
-          { text: "무심한 듯 은근히 챙겨주는 다정함", char: "kurimanju" },
+          { text: "무심한 듯 은근히 챙겨주는 다정함", char: "kurimanju", weight: 3 },
           { text: "뛰어난 순발력과 넘치는 에너지", char: "usagi" },
           { text: "목표 달성을 위해 끝까지 노력하는 열정", char: "shisa" },
           { text: "완벽함 속에 숨겨진 귀여움", char: "rakko" }
@@ -750,6 +788,7 @@
       momonga: 0, kurimanju: 0, rakko: 0,
       shisa: 0, kani: 0, ode: 0
     };
+    let answerOrder = []; // 답변 순서대로 선택된 캐릭터를 기록 (동점자 처리에 사용)
     let currentResultData = null;
 
     // 페이지 접속 시 URL 파라미터 체크 (?result=xxx 확인)
@@ -783,15 +822,16 @@
         const btn = document.createElement('button');
         btn.className = 'btn-option';
         btn.innerText = `${idx + 1}. ${ans.text}`;
-        btn.onclick = () => selectAnswer(ans.char);
+        btn.onclick = () => selectAnswer(ans.char, ans.weight || 1);
         btnContainer.appendChild(btn);
       });
     }
 
-    function selectAnswer(targetChar) {
+    function selectAnswer(targetChar, weight) {
       if (charScores[targetChar] !== undefined) {
-        charScores[targetChar] += 1;
+        charScores[targetChar] += (weight || 1);
       }
+      answerOrder.push(targetChar);
 
       currentQ++;
       if (currentQ < questions.length) {
@@ -802,13 +842,28 @@
     }
 
     function showResult() {
-      let selectedCharKey = 'chiikawa';
+      // 1) 가장 높은 점수를 찾는다 (가중치 문항 덕분에 대부분 여기서 단독 1위가 정해짐)
       let maxScore = -1;
-
       for (let charKey in charScores) {
         if (charScores[charKey] > maxScore) {
           maxScore = charScores[charKey];
-          selectedCharKey = charKey;
+        }
+      }
+
+      let topChars = Object.keys(charScores).filter(charKey => charScores[charKey] === maxScore);
+
+      let selectedCharKey;
+      if (topChars.length === 1) {
+        selectedCharKey = topChars[0];
+      } else {
+        // 2) 동점일 경우: 사용자가 가장 마지막(=가장 최근)에 선택했던 캐릭터를 우선시한다.
+        //    (고정된 순서로 승자를 정하지 않고, 사용자의 답변 흐름을 기준으로 삼아 매번 결과가 논리적으로 결정되도록 함)
+        selectedCharKey = topChars[0];
+        for (let i = answerOrder.length - 1; i >= 0; i--) {
+          if (topChars.includes(answerOrder[i])) {
+            selectedCharKey = answerOrder[i];
+            break;
+          }
         }
       }
 
@@ -945,6 +1000,7 @@
       for (let key in charScores) {
         charScores[key] = 0;
       }
+      answerOrder = [];
       document.getElementById('result-view').style.display = 'none';
       document.getElementById('start-view').style.display = 'block';
     }
